@@ -9,9 +9,4 @@ namespace Utils {
     bool getCharsetSupport();
     void sleep(int t);
 }
-
-namespace Errors {
-    void outOfBoundingBox(int x, int y, int W, int H);
-}
-
 #endif

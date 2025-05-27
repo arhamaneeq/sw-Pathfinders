@@ -10,24 +10,39 @@ class GameBoard {
         std::vector<Cell> grid;
         int width, height;
 
-        int getIndex(int x, int y);
+        int getIndex(int x, int y) const;
 
     public:
         GameBoard(int w, int h);
         ~GameBoard();
 
-        const Cell getCell(int x, int y) const;
+        const Cell&   getCell(int x, int y) const;
+        int getWidth() const;
+        int getHeight() const;
 
-        void setCell(const Cell& cell);
-        void setCellType(cellType type);
-        void setCellVisit(bool visited);
-        void setCellCost(float cost);
-        void setCellHeuristic(float cost);
+        void          setCell(int x, int y, const Cell& cell);
+        void      setCellType(int x, int y, cellType type);
+        void     setCellVisit(int x, int y, bool visited);
+        void      setCellCost(int x, int y, float cost);
+        void setCellHeuristic(int x, int y, float cost);
 
-        void createWallHorizontal(int x, int y, int len);
-        void createWallVertical(int x, int y, int len);
-        void flipCell(int x, int y);
+
+
+        class Configurator {
+            private:
+                GameBoard* board;
+            public:
+                Configurator(GameBoard* b);
+
+                void createWallHorizontal(int x, int y, int len);
+                void   createWallVertical(int x, int y, int len);
+                void             flipCell(int x, int y);
+         };
+
+        friend class Configurator;
+        Configurator config;
 };
+
 
 
 #endif

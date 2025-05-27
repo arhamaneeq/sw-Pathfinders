@@ -86,4 +86,5 @@ bool Utils::getCharsetSupport() {
     }
     return false;
 }
+
 #endif
