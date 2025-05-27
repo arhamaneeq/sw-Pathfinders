@@ -1,17 +1,21 @@
-#include <iostream>
-#include <sstream>
+#ifndef RENDERER_HPP
+#define RENDERER_HPP
+
 #include "types.hpp"
+
 
 class Renderer {
     private:
-        size_t frame;
-        dims viewport;
+        int frame;
+        int vw, vh;
         bool colourSupport;
         bool ansiSupport;
 
         std::ostringstream outputBuffer;
+
+        char full, empty;
     public:
-        Renderer(dims viewport, bool colourSupport, bool ansiSupport); 
+        Renderer(std::pair<int, int> viewport, bool colourSupport, bool ansiSupport); 
         ~Renderer();
 
         void clear();
@@ -23,3 +27,5 @@ class Renderer {
         void renderText();
         void renderProgressBar(float percentProgress); 
 };
+
+#endif

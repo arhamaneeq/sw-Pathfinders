@@ -1,10 +1,12 @@
 #ifndef TYPES_HPP
 #define TYPES_HPP
 
-struct dims {
-    int width;
-    int height;
-};
+#include<vector>
+#include<string>
+#include<sstream>
+#include<stdexcept>
+#include<iostream>
+#include<chrono>
 
 enum class cellType {
     Empty,
