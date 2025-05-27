@@ -6,6 +6,22 @@ struct dims {
     int height;
 };
 
+enum class cellType {
+    Empty,
+    Wall,
+    Start,
+    Goal,
+    Path,
+    Visited
+};
+
+struct Cell {
+    cellType type;
+    bool visited = false;
+    float cost = 1.0f;
+    float heuristic = 0.0f;
+};
+
 namespace Ansi {
     constexpr const char* Reset = "\033[0m";
 
