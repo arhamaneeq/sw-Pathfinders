@@ -6,6 +6,7 @@
 #include<sstream>
 #include<stdexcept>
 #include<iostream>
+#include<thread>
 #include<chrono>
 
 enum class cellType {

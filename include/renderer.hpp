@@ -21,11 +21,13 @@ class Renderer {
         void clear();
         void render();
 
-        void renderGrid(); //TODO: define gameboard object;
+        void testCheckerBoard();
+
+        void appendGrid(); 
         
-        void renderLine();
-        void renderText();
-        void renderProgressBar(float percentProgress); 
+        void appendLine(); //TODO: define funcs
+        void appendText();
+        void appendProgressBar(float percentProgress); 
 };
 
 #endif

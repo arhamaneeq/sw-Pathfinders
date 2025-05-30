@@ -5,11 +5,27 @@ Renderer::~Renderer() = default;
 
 
 void Renderer::clear() {
-    outputBuffer << Ansi::CursorHome << Ansi::ClearScreen;
+    outputBuffer.str("");
+    outputBuffer.clear();
+    outputBuffer << Ansi::ClearScreen << Ansi::CursorHome;
+
+    // FIXME: screen is not cleared
 }
 
 void Renderer::render() {
-    std::cout << outputBuffer.str();
-    std::cout << std::flush;
+    std::cout << outputBuffer.str() << std::flush;
     frame++;
+
+    outputBuffer.str("");
+    outputBuffer.clear();
+}
+
+void Renderer::testCheckerBoard() {
+    for (int y = 0; y < vh; y++) {
+        for (int x = 0; x < vw; x++) {
+            outputBuffer << (((x + y + frame) % 2 == 0) ? '#' : ' ');
+        }
+
+        outputBuffer << "\n";
+    }
 }
