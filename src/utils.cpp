@@ -36,7 +36,7 @@ bool Utils::getColourSupport() {
 
 #endif
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_WIN32)
 #include<Windows.h>
 #include<io.h>
 
@@ -69,7 +69,7 @@ bool Utils::getColourSupport() {
 #endif
 
 
-#if defined(_WIN32) || defined(_WIN64)
+#if defined(_WIN32)
 bool Utils::getCharsetSupport() {
     return GetConsoleOutputCP() == 65001;
 }
@@ -85,6 +85,26 @@ bool Utils::getCharsetSupport() {
         }
     }
     return false;
+}
+
+#endif
+
+#if defined(_WIN32)
+#include <windows.h>
+
+void Utils::enableAnsiSupport() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    DWORD dwMode = 0;
+    if (GetConsoleMode(hOut, &dwMode)) {
+        dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+        SetConsoleMode(hOut, dwMode);
+    }
+}
+
+#else 
+
+void Utils::enableAnsiSupport() {
+    // No-op
 }
 
 #endif

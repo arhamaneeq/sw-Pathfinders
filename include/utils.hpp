@@ -7,6 +7,7 @@ namespace Utils {
     std::pair<int, int> getTerminalSize();
     bool getColourSupport();
     bool getCharsetSupport();
-    void sleep(int t);
+
+    void enableAnsiSupport();
 }
 #endif

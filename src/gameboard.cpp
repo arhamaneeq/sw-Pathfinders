@@ -13,6 +13,15 @@ int GameBoard::getIndex(int x, int y) const {
     return x + y * width;
 }
 
+int GameBoard::getWidth() const {
+    return width;
+}
+
+int GameBoard::getHeight() const {
+    return height;
+}
+
+
 const Cell& GameBoard::getCell(int x, int y) const {
     return grid[getIndex(x, y)];
 }
@@ -41,6 +50,8 @@ void GameBoard::setCellCost(int x, int y, float cost) {
 void GameBoard::setCellHeuristic(int x, int y, float h) {
     grid[getIndex(x, y)].heuristic = h;
 }
+
+GameBoard::Configurator::Configurator(GameBoard* b) : board(b) {};
 
 void GameBoard::Configurator::createWallAt(int x, int y) {
     (*board).setCellType(x, y, cellType::Wall);
