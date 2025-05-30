@@ -10,7 +10,6 @@ int GameBoard::getIndex(int x, int y) const {
     if (x < 0 || y < 0 || x > width || y > height) {
         Errors::outOfBoundingBox(x, y, width, height);
     }
-
     return x + y * width;
 }
 
@@ -43,6 +42,10 @@ void GameBoard::setCellHeuristic(int x, int y, float h) {
     grid[getIndex(x, y)].heuristic = h;
 }
 
+void GameBoard::Configurator::createWallAt(int x, int y) {
+    (*board).setCellType(x, y, cellType::Wall);
+}
+
 void GameBoard::Configurator::createWallHorizontal(int X, int Y, int len) {
     if (X + len > board->getWidth()) {Errors::outOfBoundingRange(X + len, board->getWidth());}
     
@@ -57,4 +60,8 @@ void GameBoard::Configurator::createWallVertical(int X, int Y, int len) {
     for (int y = Y; y < Y + len; y++) {
         (*board).setCellType(X, y, cellType::Wall);
     }
+}
+
+void GameBoard::Configurator::createEmptyAt(int x, int y) {
+    (*board).setCellType(x, y, cellType::Empty);
 }

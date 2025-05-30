@@ -26,7 +26,7 @@ class GameBoard {
         void      setCellCost(int x, int y, float cost);
         void setCellHeuristic(int x, int y, float cost);
 
-
+        
 
         class Configurator {
             private:
@@ -36,7 +36,9 @@ class GameBoard {
 
                 void createWallHorizontal(int x, int y, int len);
                 void   createWallVertical(int x, int y, int len);
-                void             flipCell(int x, int y);
+                void         createWallAt(int x, int y);
+
+                void        createEmptyAt(int x, int y);
          };
 
         friend class Configurator;
