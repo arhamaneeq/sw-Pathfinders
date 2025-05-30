@@ -13,7 +13,7 @@ class GameBoard {
         int getIndex(int x, int y) const;
 
     public:
-        GameBoard(int w, int h);
+        GameBoard(std::pair<int, int> wd);
         ~GameBoard();
 
         const Cell&   getCell(int x, int y) const;
@@ -26,7 +26,7 @@ class GameBoard {
         void      setCellCost(int x, int y, float cost);
         void setCellHeuristic(int x, int y, float cost);
 
-        
+
 
         class Configurator {
             private:

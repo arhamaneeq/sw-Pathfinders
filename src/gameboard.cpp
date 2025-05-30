@@ -2,7 +2,7 @@
 #include "../include/types.hpp"
 #include "../include/errors.hpp"
 
-GameBoard::GameBoard(int w, int h) : width(w), height(h), grid((w + 2) * (h + 2)), config(this) {}
+GameBoard::GameBoard(std::pair<int, int> wd) : width(wd.first), height(wd.second), grid((wd.first + 2) * (wd.second + 2)), config(this) {}
 GameBoard::~GameBoard() = default;
 
 int GameBoard::getIndex(int x, int y) const {

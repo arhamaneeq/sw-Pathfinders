@@ -7,12 +7,12 @@
 #include <cstdlib>
 #include <string>
 
-dims Utils::getTerminalSize() {
-    dims dimensions;
+std::pair<int, int> Utils::getTerminalSize() {
+    std::pair<int, int> dimensions;
     struct winsize w;
     if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &w) == -1) {
-        dimensions.width = 50;
-        dimensions.height = 10;
+        dimensions.first = 50;
+        dimensions.second = 10;
         return dimensions; // fallback
     }
 
@@ -40,12 +40,12 @@ bool Utils::getColourSupport() {
 #include<Windows.h>
 #include<io.h>
 
-dims Utils::getTerminalSize() {
+std::pair<int, int> Utils::getTerminalSize() {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
-    dims dimensions;
+    std::pair<int, int> dimensions;
     if (GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi)) {
-        dimensions.width  = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-        dimensions.height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+        dimensions.first  = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+        dimensions.second = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
     }
 
     return dimensions;

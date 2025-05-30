@@ -1,5 +1,6 @@
 #include "../include/renderer.hpp"
-Renderer::Renderer(dims viewport, bool colourSupport, bool ansiSupport) : frame(0), viewport(viewport), colourSupport(colourSupport), ansiSupport(ansiSupport), outputBuffer() {}
+
+Renderer::Renderer(std::pair<int, int> viewport, bool colourSupport, bool ansiSupport) : frame(0), vw(viewport.first), vh(viewport.second), colourSupport(colourSupport), ansiSupport(ansiSupport), outputBuffer() {}
 Renderer::~Renderer() = default;
 
 
