@@ -70,7 +70,7 @@ bool Utils::getColourSupport() {
 
 
 #if defined(_WIN32)
-bool Utils::getCharsetSupport() {
+bool Utils::getUTF8Support() {
     return GetConsoleOutputCP() == 65001;
 }
 #else
@@ -97,7 +97,9 @@ void Utils::enableAnsiSupport() {
     DWORD dwMode = 0;
     if (GetConsoleMode(hOut, &dwMode)) {
         dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-        SetConsoleMode(hOut, dwMode);
+        if (!SetConsoleMode(hOut, dwMode)) {
+            throw std::runtime_error("Failed to enable ANSI Support!");
+        }
     }
 }
 
@@ -105,6 +107,33 @@ void Utils::enableAnsiSupport() {
 
 void Utils::enableAnsiSupport() {
     // No-op
+}
+
+#endif
+
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
+#include <io.h>
+
+bool Utils::getAnsiSupport() {
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hOut == INVALID_HANDLE_VALUE || !_isatty(_fileno(stdout)))
+        return false;
+
+    DWORD mode = 0;
+    if (!GetConsoleMode(hOut, &mode))
+        return false;
+
+    // Check if ANSI escape sequence support is already enabled
+    return (mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING) != 0;
+}
+
+#else // Unix-like systems
+
+#include <unistd.h>
+
+bool Utils::getAnsiSupport() {
+    return isatty(fileno(stdout)); // Assume ANSI if writing to terminal
 }
 
 #endif

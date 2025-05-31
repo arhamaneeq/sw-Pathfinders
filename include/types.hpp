@@ -48,6 +48,10 @@ namespace Ansi {
     constexpr const char* CursorHome    = "\033[H";
     constexpr const char* CursorSave    = "\033[s";
     constexpr const char* CursorRestore = "\033[u";
+
+    constexpr const char* CursorHide    = "\033[?25l";
+    constexpr const char* CursorShow    = "\033[?25h";
+
 }
 
 #endif
