@@ -13,7 +13,7 @@ int main() {
     Renderer renderer(
         Utils::getTerminalSize(),
         Utils::getColourSupport(),
-        Utils::getCharsetSupport()
+        Utils::getAnsiSupport()
     );
 
     GameBoard board(Utils::getTerminalSize());
