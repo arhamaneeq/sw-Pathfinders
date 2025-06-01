@@ -25,6 +25,22 @@ void Renderer::render() {
     outputBuffer.clear();
 }
 
+int Renderer::getWidth() {
+    return vw;
+}
+
+int Renderer::getHeight() {
+    return vh;
+}
+
+int Renderer::getAnsiSupport() {
+    return ansiSupport;
+}
+
+int Renderer::getColourSupport() {
+    return colourSupport;
+}
+
 void Renderer::testCheckerBoard() {
     for (int y = 0; y < vh; y++) {
         for (int x = 0; x < vw; x++) {

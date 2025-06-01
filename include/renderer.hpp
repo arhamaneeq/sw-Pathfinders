@@ -21,6 +21,11 @@ class Renderer {
         void clear();
         void render();
 
+        int getWidth();
+        int getHeight();
+        int getColourSupport();
+        int getAnsiSupport();
+
         void testCheckerBoard();
 
         void appendGrid(); 
