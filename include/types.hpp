@@ -18,6 +18,14 @@ enum class cellType {
     Visited
 };
 
+enum class Algorithm {
+    Djikstra,
+    AStar,
+    BFS,
+    DFS
+    // TODO: add support for more algorithms, RRT/RRT*, etc.
+};
+
 struct Cell {
     cellType type;
     bool visited = false;
