@@ -14,6 +14,8 @@ class Renderer {
         std::ostringstream outputBuffer;
 
         char full, empty;
+
+        void clearScreen();
     public:
         Renderer(std::pair<int, int> viewport, bool colourSupport, bool ansiSupport); 
         ~Renderer();

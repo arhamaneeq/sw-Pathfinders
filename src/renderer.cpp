@@ -1,12 +1,6 @@
 #include "../include/renderer.hpp"
 
-Renderer::Renderer(std::pair<int, int> viewport, bool colourSupport, bool ansiSupport) : frame(0), vw(viewport.first), vh(viewport.second - 1), colourSupport(colourSupport), ansiSupport(ansiSupport), outputBuffer() {
-    std::cout << "Renderer initialised with:";
-    std::cout << "\n           vw: " << vw;
-    std::cout << "\n           vh: " << vh;
-    std::cout << "\n  AnsiCharset: " << ansiSupport;
-    std::cout << "\n   AnsiColour: " << colourSupport;
-}
+Renderer::Renderer(std::pair<int, int> viewport, bool colourSupport, bool ansiSupport) : frame(0), vw(viewport.first), vh(viewport.second - 1), colourSupport(colourSupport), ansiSupport(ansiSupport), outputBuffer() {clearScreen();}
 Renderer::~Renderer() = default;
 
 
@@ -23,6 +17,14 @@ void Renderer::render() {
 
     outputBuffer.str("");
     outputBuffer.clear();
+}
+
+void Renderer::clearScreen() {
+    clear();
+    for (int i = 0; i < vw * vh; i++) {
+        outputBuffer << " ";
+    }
+    render();
 }
 
 int Renderer::getWidth() {

@@ -81,9 +81,9 @@ struct Coord {
         return std::abs(x) + std::abs(y);
     }
 
-    float magnitude() const {
-        return std::sqrtf(x*x + y*y);
-    }
+    // float magnitude() const {
+    //     return std::sqrt(x*x + y*y);
+    // }
 };
 
 #endif
