@@ -77,6 +77,14 @@ struct Coord {
         return {-x, -y};
     }
 
+    bool operator==(const Coord& Q) const {
+        return ((x == Q.x) && (y == Q.y));
+    }
+
+    bool operator!=(const Coord& Q) const {
+        return ((x != Q.x) || (y != Q.y));
+    }
+
     int manhattan() const {
         return std::abs(x) + std::abs(y);
     }
