@@ -2,10 +2,12 @@
 #include "../include/types.hpp"
 #include "../include/errors.hpp"
 
-GameBoard::GameBoard(std::pair<int, int> wd) : width(wd.first), height(wd.second), grid((wd.first + 2) * (wd.second + 2)), config(this) {}
-GameBoard::~GameBoard() = default;
+Grid::Grid(std::pair<int, int> wd) : width(wd.first), height(wd.second), grid((wd.first + 2) * (wd.second + 2)), config(this) {}
+Grid::~Grid() = default;
 
-int GameBoard::getIndex(int x, int y) const {
+int Grid::getIndex(const Coord& P) const {
+    int x = P.x, y = P.y;
+
     x++; y++;
     if (x < 0 || y < 0 || x > width || y > height) {
         Errors::outOfBoundingBox(x, y, width, height);
@@ -13,21 +15,21 @@ int GameBoard::getIndex(int x, int y) const {
     return x + y * width;
 }
 
-int GameBoard::getWidth() const {
+int Grid::getWidth() const {
     return width;
 }
 
-int GameBoard::getHeight() const {
+int Grid::getHeight() const {
     return height;
 }
 
 
-const Cell& GameBoard::getCell(int x, int y) const {
-    return grid[getIndex(x, y)];
+const Cell& Grid::getCell(const Coord& P) const {
+    return grid[getIndex(P)];
 }
 
-void GameBoard::setCell(int x, int y, const Cell& cell) {
-    int i = getIndex(x, y);
+void Grid::setCell(const Coord& P, const Cell& cell) {
+    int i = getIndex(P);
 
     grid[i].cost = cell.cost;
     grid[i].heuristic = cell.heuristic;
@@ -35,44 +37,44 @@ void GameBoard::setCell(int x, int y, const Cell& cell) {
     grid[i].visited = cell.visited;
 }
 
-void GameBoard::setCellType(int x, int y, cellType type) {
-    grid[getIndex(x, y)].type = type;
+void Grid::setCellType(const Coord& P, cellType type) {
+    grid[getIndex(P)].type = type;
 }
 
-void GameBoard::setCellVisit(int x, int y, bool visited) {
-    grid[getIndex(x, y)].visited = visited;
+void Grid::setCellVisit(const Coord& P, bool visited) {
+    grid[getIndex(P)].visited = visited;
 }
 
-void GameBoard::setCellCost(int x, int y, float cost) {
-    grid[getIndex(x, y)].cost = cost;
+void Grid::setCellCost(const Coord& P, float cost) {
+    grid[getIndex(P)].cost = cost;
 }
 
-void GameBoard::setCellHeuristic(int x, int y, float h) {
-    grid[getIndex(x, y)].heuristic = h;
+void Grid::setCellHeuristic(const Coord& P, float h) {
+    grid[getIndex(P)].heuristic = h;
 }
 
-GameBoard::Configurator::Configurator(GameBoard* b) : board(b) {};
+Grid::Configurator::Configurator(Grid* b) : grid(b) {};
 
-void GameBoard::Configurator::createWallAt(int x, int y) {
-    (*board).setCellType(x, y, cellType::Wall);
+void Grid::Configurator::createWallAt(const Coord& P) {
+    (*grid).setCellType(P, cellType::Wall);
 }
 
-void GameBoard::Configurator::createWallHorizontal(int X, int Y, int len) {
-    if (X + len > board->getWidth()) {Errors::outOfBoundingRange(X + len, board->getWidth());}
+void Grid::Configurator::createWallHorizontal(const Coord& P, int len) {
+    if (P.x + len > grid->getWidth()) {Errors::outOfBoundingRange(P.x + len, grid->getWidth());}
     
-    for (int x = X; x < X + len; x++) {
-        (*board).setCellType(x, Y, cellType::Wall);
+    for (int x = P.x; x < P.x + len; x++) {
+        (*grid).setCellType(Coord{x, P.y}, cellType::Wall);
     }
 }
 
-void GameBoard::Configurator::createWallVertical(int X, int Y, int len) {
-    if (Y + len > board->getHeight()) {Errors::outOfBoundingRange(Y + len, board->getHeight());}
+void Grid::Configurator::createWallVertical(const Coord& P, int len) {
+    if (P.y + len > grid->getHeight()) {Errors::outOfBoundingRange(P.y + len, grid->getHeight());}
     
-    for (int y = Y; y < Y + len; y++) {
-        (*board).setCellType(X, y, cellType::Wall);
+    for (int y = P.y; y < P.y + len; y++) {
+        (*grid).setCellType(Coord{P.x, y}, cellType::Wall);
     }
 }
 
-void GameBoard::Configurator::createEmptyAt(int x, int y) {
-    (*board).setCellType(x, y, cellType::Empty);
+void Grid::Configurator::createEmptyAt(const Coord& P) {
+    (*grid).setCellType(P, cellType::Empty);
 }

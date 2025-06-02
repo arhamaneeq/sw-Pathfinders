@@ -16,7 +16,7 @@ int main() {
         Utils::getAnsiSupport()
     );
 
-    GameBoard board(Utils::getTerminalSize());
+    Grid grid(Utils::getTerminalSize());
 
     while (true) {
         renderer.clear();

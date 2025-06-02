@@ -5,40 +5,41 @@
 #include "types.hpp"
 #include "utils.hpp"
 
-class GameBoard {
+class Grid {
     private:
         std::vector<Cell> grid;
         int width, height;
 
-        int getIndex(int x, int y) const;
+        int getIndex(const Coord& P) const;
 
     public:
-        GameBoard(std::pair<int, int> wd);
-        ~GameBoard();
+        Grid(std::pair<int, int> wd);
+        ~Grid();
 
-        const Cell&   getCell(int x, int y) const;
+        const Cell&   getCell(const Coord& P) const;
+
         int getWidth() const;
         int getHeight() const;
 
-        void          setCell(int x, int y, const Cell& cell);
-        void      setCellType(int x, int y, cellType type);
-        void     setCellVisit(int x, int y, bool visited);
-        void      setCellCost(int x, int y, float cost);
-        void setCellHeuristic(int x, int y, float cost);
+        void          setCell(const Coord& P, const Cell& cell);
+        void      setCellType(const Coord& P, cellType type);
+        void     setCellVisit(const Coord& P, bool visited);
+        void      setCellCost(const Coord& P, float cost);
+        void setCellHeuristic(const Coord& P, float cost);
 
 
 
         class Configurator {
             private:
-                GameBoard* board;
+                Grid* grid;
             public:
-                Configurator(GameBoard* b);
+                Configurator(Grid* b);
 
-                void createWallHorizontal(int x, int y, int len);
-                void   createWallVertical(int x, int y, int len);
-                void         createWallAt(int x, int y);
+                void createWallHorizontal(const Coord& P, int len);
+                void   createWallVertical(const Coord& P, int len);
+                void         createWallAt(const Coord& P);
 
-                void        createEmptyAt(int x, int y);
+                void        createEmptyAt(const Coord& P);
          };
 
         friend class Configurator;

@@ -54,4 +54,28 @@ namespace Ansi {
 
 }
 
+struct Coord {
+    int x, y;
+
+    Coord operator+(const Coord& Q) const {
+        return {x + Q.x, y + Q.y};
+    }
+    
+    Coord operator-(const Coord& Q) const {
+        return {x - Q.x, y - Q.y};
+    }
+
+    Coord operator-() const {
+        return {-x, -y};
+    }
+
+    int manhattan() const {
+        return std::abs(x) + std::abs(y);
+    }
+
+    float magnitude() const {
+        return std::sqrtf(x*x + y*y);
+    }
+};
+
 #endif
