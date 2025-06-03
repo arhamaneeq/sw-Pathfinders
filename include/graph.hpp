@@ -14,9 +14,10 @@ class Graph {
         ~Graph();
 
         void addNode(const Coord& P);
-        void addEdge(const Coord& P, const Coord& Q);
-        void removeEdge(const Coord& P, const Coord& Q);
+        void addEdge(const Coord& P, const Coord& Q, float w = 1.0f);
+
         void removeNode(const Coord& P);
+        void removeEdge(const Coord& P, const Coord& Q);
 
         const std::vector<Coord>& neighbours(const Coord& P);
 };

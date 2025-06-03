@@ -8,6 +8,7 @@
 #include<iostream>
 #include<thread>
 #include<chrono>
+#include<algorithm>
 
 enum class cellType {
     Empty,
