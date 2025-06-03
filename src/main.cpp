@@ -24,17 +24,20 @@ int main() {
     grid.setCellType(Coord{6, 5}, cellType::Wall);
     grid.setCellType(Coord{7, 7}, cellType::Visited);
 
-    // while (true) {
-    //     renderer.clear();
+    for (int frame = 0; frame < 100; frame++) {
+        renderer.clear();
+        renderer.appendEmpty();
+        renderer.appendTextCenter("Pathfinders", {Ansi::Bold});
+        renderer.appendTextCenter("A Demonstration by Arham Aneeq");
+        renderer.appendEmpty();
+        renderer.appendTextCenter("github.com/arhamaneeq", {Ansi::Cyan});
+        renderer.appendLine();
+        renderer.appendProgressBar(frame / 100.0f);
+        renderer.appendLine();
+        renderer.render();
 
-    //     std::cout << "\nWindows size: (" << renderer.getWidth() << ", " << renderer.getHeight() << ")" << Ansi::DefaultFG;
-    //     std::cout << "\nColour Support: " << (renderer.getColourSupport() ? Ansi::Green : Ansi::Red) << (renderer.getColourSupport() ? "True" : "False") << Ansi::DefaultFG;
-    //     std::cout << "\nANSI Support: " << (renderer.getAnsiSupport() ? Ansi::Green : Ansi::Red) << (renderer.getAnsiSupport() ? "True" : "False") << Ansi::DefaultFG;
-        
-    //     renderer.render();
-
-    //     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    // }
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    }
 
     while (true) {
         renderer.clear();

@@ -83,3 +83,34 @@ void Renderer::appendGrid(const Grid& grid) {
 
     outputBuffer << Ansi::DefaultFG;
 }
+
+void Renderer::appendLine() {
+    for (int x = 0; x < vw; x++) {
+        outputBuffer << "-";
+    }
+
+    outputBuffer << "\n";
+}
+
+void Renderer::appendEmpty() {
+    outputBuffer << "\n";
+}
+
+void Renderer::appendText(std::string txt, Styles styles) {
+    for (auto style : styles) {outputBuffer << std::string(style);}
+    outputBuffer << txt << Ansi::Reset << "\n";
+}
+
+void Renderer::appendTextCenter(std::string txt, Styles styles) {
+    for (int i = 0; i < 0.5*(vw - txt.length()); i++) {outputBuffer << " ";}
+    for (auto style : styles) {outputBuffer << std::string(style);}
+    outputBuffer << txt << Ansi::Reset << "\n";
+}
+
+void Renderer::appendProgressBar(float percentProgress) {
+    for (int i = 0; i < vw*percentProgress; i++) {
+        outputBuffer << "#";
+    }
+    outputBuffer << "\n";
+}
+
