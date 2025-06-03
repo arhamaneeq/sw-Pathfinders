@@ -2,7 +2,7 @@
 #define RENDERER_HPP
 
 #include "types.hpp"
-
+#include "gameboard.hpp"
 
 class Renderer {
     private:
@@ -30,7 +30,7 @@ class Renderer {
 
         void testCheckerBoard();
 
-        void appendGrid(); 
+        void appendGrid(const Grid& grid); 
         
         void appendLine(); //TODO: define funcs
         void appendText();

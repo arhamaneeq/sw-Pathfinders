@@ -53,3 +53,33 @@ void Renderer::testCheckerBoard() {
         outputBuffer << "\n";
     }
 }
+
+void Renderer::appendGrid(const Grid& grid) {
+    for (int y = 0; y < vh; y++) {
+        for (int x = 0; x < vw; x++) {
+            switch (grid.getCell(Coord{x, y}).type) {
+                case cellType::Empty:
+                    outputBuffer << Ansi::Black;
+                    break;
+                case cellType::Wall:
+                    outputBuffer << Ansi::White;
+                    break;
+                case cellType::Start:
+                    outputBuffer << Ansi::Blue;
+                    break;
+                case cellType::Goal:
+                    outputBuffer << Ansi::Magenta;
+                    break;
+                case cellType::Visited:
+                    outputBuffer << Ansi::Yellow;
+                    break;
+            }
+
+            outputBuffer << "#";
+        }
+
+        outputBuffer << "\n";
+    }
+
+    outputBuffer << Ansi::DefaultFG;
+}
