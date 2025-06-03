@@ -1,5 +1,13 @@
 #include "../include/graph.hpp"
 
+bool Graph::hasNode(const Coord& P) const {
+    adjacencyList.hasNode(P);
+}
+
+bool Graph::hasEdge(const Coord& P, const Coord& Q) const {
+    adjacencyList.hasEdge(P, Q);
+}
+
 void Graph::addNode(const Coord& P) {
     adjacencyList.addNode(P);
 }
@@ -18,5 +26,32 @@ void Graph::removeNode(const Coord& P) {
 }
 
 void Graph::removeEdge(const Coord& P, const Coord& Q) {
-    adjacencyList.removeEdge(P, Q);
+    if (isDirected) {
+        adjacencyList.removeEdge(P, Q);
+    } else {
+        adjacencyList.removeEdge(P, Q);
+        adjacencyList.removeEdge(Q, P);
+    }
+}
+
+const std::vector<std::pair<Coord, float>> Graph::getNeighbours(const Coord& P) const {
+    std::vector<std::pair<Coord, float>> neighbours;
+
+    if (!adjacencyList.hasNode(P)) return neighbours;
+
+    for (const auto& [q, w] : adjacencyList.getNeighboursFrom(P)) {
+        neighbours.emplace_back(q, w);
+    }
+
+    if (isDirected) {
+        for (const Coord& node : adjacencyList.getAllNodes()) {
+            for (const auto& [target, weight] : adjacencyList.getNeighboursFrom(node)) {
+                if (target == P) {
+                    neighbours.emplace_back(node, weight);
+                }
+            }
+        }
+    }
+
+    return neighbours;
 }
