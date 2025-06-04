@@ -18,6 +18,7 @@ bool AdjacencyList::hasEdge(const Coord& P, const Coord& Q) const {
 void AdjacencyList::addNode(const Coord& P) {
     if (!hasNode(P)) {
         adj[P] = {};
+        numNodes++;
     }
 }
 
@@ -28,22 +29,32 @@ void AdjacencyList::addEdge(const Coord& P, const Coord& Q, float w) {
 
     if (!hasEdge(P, Q)) {
         adj[P].emplace_back(Q, w);
+        numEdges++;
     }
+
 }
 
 void AdjacencyList::removeNode(const Coord& P) {
-    for (auto& [node, edges] : adj) {
-        edges.erase(
-            std::remove_if(
-                edges.begin(),
-                edges.end(),
-                [&](const std::pair<Coord, float>& edge) {
-                    return edge.first == P;
-                }
-            ),
-            edges.end()
-        );
-    } 
+    if (hasNode(P)) {
+        for (auto& [node, edges] : adj) {
+            edges.erase(
+                std::remove_if(
+                    edges.begin(),
+                    edges.end(),
+                    [&](const std::pair<Coord, float>& edge) {
+                        if (edge.first == P) {
+                            numEdges--;
+                            return true;
+                        } else {return false;};
+                    }
+                ),
+                edges.end()
+            );
+        }
+    
+        adj.erase(P);
+        numNodes--;
+    }
 }
 
 void AdjacencyList::removeEdge(const Coord& P, const Coord& Q) {
@@ -56,7 +67,10 @@ void AdjacencyList::removeEdge(const Coord& P, const Coord& Q) {
             neighbours.begin(),
             neighbours.end(),
             [&](const std::pair<Coord, float>& edge) {
-                return edge.first == Q;
+                if (edge.first == Q) {
+                    numEdges--;
+                    return true;
+                } else {return false;};
             }),
         neighbours.end()
     );
@@ -94,7 +108,19 @@ const std::vector<Coord> AdjacencyList::getAllNodes() const {
     return nodes;
 }
 
+int AdjacencyList::numberOfNodes() const {
+    return numNodes;
+}
 
+int AdjacencyList::numberOfEdges() const {
+    return numEdges;
+}
+
+void AdjacencyList::clear() {
+    adj.clear();
+    numEdges = 0;
+    numNodes = 0;
+}
 
 
 

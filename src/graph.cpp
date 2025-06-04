@@ -55,3 +55,21 @@ const std::vector<std::pair<Coord, float>> Graph::getNeighbours(const Coord& P) 
 
     return neighbours;
 }
+
+int Graph::getNumberOfNodes() const {
+    return adjacencyList.numberOfNodes();
+}
+
+int Graph::getNumberOfEdges() const {
+    return ((isDirected) 
+        ? adjacencyList.numberOfEdges() 
+        : (adjacencyList.numberOfEdges() / 2));
+}
+
+void Graph::setDirected(bool directed) {
+    isDirected = directed;
+}
+
+void Graph::clear() {
+    adjacencyList.clear();
+}

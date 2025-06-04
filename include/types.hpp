@@ -9,6 +9,7 @@
 #include<thread>
 #include<chrono>
 #include<algorithm>
+#include<set>
 
 enum class cellType {
     Empty,
@@ -25,6 +26,13 @@ enum class Algorithm {
     BFS,
     DFS
     // TODO: add support for more algorithms, RRT/RRT*, etc.
+};
+
+enum class State {
+    NO_INIT,
+    INIT,
+    SOLVING,
+    SOLVED
 };
 
 struct Cell {
@@ -92,6 +100,19 @@ struct Coord {
 
     float magnitude() const {
         return std::sqrtf(x*x + y*y);
+    }
+
+    std::vector<Coord> adjacent() {
+        return {
+            Coord{x - 1, y - 1},
+            Coord{x,     y - 1},
+            Coord{x + 1, y - 1},
+            Coord{x + 1, y    },
+            Coord{x + 1, y + 1},
+            Coord{x    , y + 1},
+            Coord{x - 1, y + 1},
+            Coord{x - 1, y    }
+        };
     }
 };
 

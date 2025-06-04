@@ -6,8 +6,12 @@
 class AdjacencyList {
     private:
         std::unordered_map<Coord, std::vector<std::pair<Coord, float>>> adj;
+        int numNodes, numEdges;
 
     public:
+        AdjacencyList(); // TODO:
+        ~AdjacencyList();
+
         bool hasNode(const Coord& P) const;
         bool hasEdge(const Coord& P, const Coord& Q) const;
 
@@ -23,6 +27,9 @@ class AdjacencyList {
 
         int numberOfNodes() const;
         int numberOfEdges() const;
+
+        void clear();
+        void print() const; //TODO:
 };
 
 #endif
