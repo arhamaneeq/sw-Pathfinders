@@ -18,12 +18,7 @@ int main() {
 
     Grid grid(Utils::getTerminalSize());
 
-    grid.setCellType(Coord{4, 5}, cellType::Goal);
-    grid.setCellType(Coord{5, 5}, cellType::Path);
-    grid.setCellType(Coord{5, 6}, cellType::Start);
-    grid.setCellType(Coord{6, 5}, cellType::Wall);
-    grid.setCellType(Coord{7, 7}, cellType::Visited);
-
+    /* --- PHASE 1: Loading Fakery --- */
     for (int frame = 0; frame < 100; frame++) {
         renderer.clear();
         renderer.appendEmpty();
@@ -59,9 +54,50 @@ int main() {
     }
 
     while (true) {
-        renderer.clear();
-        renderer.appendGrid(grid);
-        renderer.render();
-    }
+        /* --- PHASE 2: Input Section --- */
+        while (true) {
+            renderer.clear();
+            renderer.appendGrid(grid);
+            renderer.appendText("  >>>", {Ansi::Magenta}, false);
+            renderer.render();
+    
+            std::string input, cmd;
+            std::getline(std::cin, input);
+            std::istringstream iss(input);
 
+            iss >> cmd;
+            if (cmd == "PWA") {
+                int x, y;
+                if (iss >> x >> y) {
+                    grid.config.createWallAt(Coord{x, y});
+                }
+            } else if (cmd == "END") {
+                return 0;
+            } else if (cmd == "PHL") {
+                int x, y, L;
+                if (iss >> x >> y >> L) {
+                    grid.config.createWallHorizontal(Coord{x, y}, L);
+                }
+            } else if (cmd == "PVL") {
+                int x, y, L;
+                if (iss >> x >> y >> L) {
+                    grid.config.createWallVertical(Coord{x, y}, L);
+                }
+            } else if (cmd == "PSA") {
+                // TODO: create guarded Grid::Config::placeStartAt
+            } else if (cmd == "PEA") {
+                // TODO: create guarded Grid::Config::placeEndAt
+            } else if (cmd == "RUN") {
+                break;
+            }
+
+        }
+    
+        /* --- PHASE 3: Pathfinding --- */
+        while (true) {
+            renderer.clear();
+            renderer.appendGrid(grid);
+            renderer.render();
+        }
+    }
 }
