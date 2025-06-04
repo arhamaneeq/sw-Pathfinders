@@ -114,3 +114,9 @@ void Renderer::appendProgressBar(float percentProgress) {
     outputBuffer << "\n";
 }
 
+void Renderer::appendInput(std::string txt, Styles styles) {
+    for (auto style : styles) {outputBuffer << std::string(style);}
+    outputBuffer << txt << Ansi::Reset << Ansi::CursorSave;
+    for (int i = 0; i < vw - txt.length(); i++) {outputBuffer << " ";}
+    outputBuffer << Ansi::CursorRestore;
+}

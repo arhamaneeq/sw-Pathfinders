@@ -41,6 +41,7 @@ class Renderer {
 
         void appendText(std::string txt, Styles styles = {}, bool newLine = true);
         void appendTextCenter(std::string txt, Styles styles = {});
+        void appendInput(std::string txt, Styles styles = {});
 
 };
 

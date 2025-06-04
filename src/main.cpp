@@ -58,7 +58,7 @@ int main() {
         while (true) {
             renderer.clear();
             renderer.appendGrid(grid);
-            renderer.appendText("  >>>", {Ansi::Magenta}, false);
+            renderer.appendInput(" >>>", {Ansi::Yellow});
             renderer.render();
     
             std::string input, cmd;
