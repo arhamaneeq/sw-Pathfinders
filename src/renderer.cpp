@@ -96,9 +96,9 @@ void Renderer::appendEmpty() {
     outputBuffer << "\n";
 }
 
-void Renderer::appendText(std::string txt, Styles styles) {
+void Renderer::appendText(std::string txt, Styles styles, bool newLine) {
     for (auto style : styles) {outputBuffer << std::string(style);}
-    outputBuffer << txt << Ansi::Reset << "\n";
+    outputBuffer << txt << Ansi::Reset <<  ((newLine) ? "\n" : "");
 }
 
 void Renderer::appendTextCenter(std::string txt, Styles styles) {

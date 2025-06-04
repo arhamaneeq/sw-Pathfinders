@@ -34,6 +34,25 @@ int main() {
         renderer.appendLine();
         renderer.appendProgressBar(frame / 100.0f);
         renderer.appendLine();
+
+        if (frame >= 25) {
+            renderer.appendTextCenter("Instructions can be found at");
+            renderer.appendTextCenter("readme.md", {Ansi::Yellow});
+            renderer.appendEmpty();
+            renderer.appendText("Press ", {}, false);
+            renderer.appendText("ctrl + C ", {Ansi::Red}, false);
+            renderer.appendText("to force stop if loop is stuck.");
+        }
+
+        if (frame >= 50) {
+            renderer.appendText("renderer::getColourSupport(): ", {}, false);
+            [&](bool v){renderer.appendText(v ? "True" : "False", {v ? Ansi::Green : Ansi::Red});}(renderer.getColourSupport());
+        }
+        if (frame >= 55) {
+            renderer.appendText("renderer::getAnsiSupport():   ", {}, false);
+            [&](bool v){renderer.appendText(v ? "True" : "False", {v ? Ansi::Green : Ansi::Red});}(renderer.getAnsiSupport());
+        }
+
         renderer.render();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
