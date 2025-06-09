@@ -74,6 +74,10 @@ void Grid::Configurator::createWallVertical(const Coord& P, int len) {
     }
 }
 
+void Grid::Configurator::createTypeAt(const Coord&P, cellType type) {
+    (*grid).setCellType(P, type);
+}
+
 void Grid::Configurator::createEmptyAt(const Coord& P) {
     (*grid).setCellType(P, cellType::Empty);
 }

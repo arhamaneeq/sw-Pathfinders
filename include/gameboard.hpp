@@ -27,8 +27,6 @@ class Grid {
         void      setCellCost(const Coord& P, float cost);
         void setCellHeuristic(const Coord& P, float cost);
 
-
-
         class Configurator {
             private:
                 Grid* grid;
@@ -38,6 +36,7 @@ class Grid {
                 void createWallHorizontal(const Coord& P, int len);
                 void   createWallVertical(const Coord& P, int len);
                 void         createWallAt(const Coord& P);
+                void         createTypeAt(const Coord& P, cellType type);
 
                 void        createEmptyAt(const Coord& P);
          };

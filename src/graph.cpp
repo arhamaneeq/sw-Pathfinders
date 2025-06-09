@@ -1,11 +1,11 @@
 #include "../include/graph.hpp"
 
 bool Graph::hasNode(const Coord& P) const {
-    adjacencyList.hasNode(P);
+    return adjacencyList.hasNode(P);
 }
 
 bool Graph::hasEdge(const Coord& P, const Coord& Q) const {
-    adjacencyList.hasEdge(P, Q);
+    return adjacencyList.hasEdge(P, Q);
 }
 
 void Graph::addNode(const Coord& P) {

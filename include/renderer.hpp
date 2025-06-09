@@ -35,7 +35,7 @@ class Renderer {
 
         void appendGrid(const Grid& grid); 
         
-        void appendLine(); //TODO: define funcs
+        void appendLine();
         void appendEmpty();
         void appendProgressBar(float percentProgress); 
 

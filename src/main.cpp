@@ -84,9 +84,15 @@ int main() {
                     grid.config.createWallVertical(Coord{x, y}, L);
                 }
             } else if (cmd == "PSA") {
-                // TODO: create guarded Grid::Config::placeStartAt
+                int x, y;
+                if (iss >> x >> y) {
+                    grid.config.createTypeAt(Coord{x, y}, cellType::Start);
+                }
             } else if (cmd == "PEA") {
-                // TODO: create guarded Grid::Config::placeEndAt
+                int x, y;
+                if (iss >> x >> y) {
+                    grid.config.createTypeAt(Coord{x, y}, cellType::Goal);
+                }
             } else if (cmd == "RUN") {
                 break;
             }

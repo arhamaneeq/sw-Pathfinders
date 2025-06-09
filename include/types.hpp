@@ -11,6 +11,8 @@
 #include<algorithm>
 #include<set>
 #include<cmath>
+#include<unordered_map>
+#include<functional>
 
 enum class cellType {
     Empty,
@@ -115,6 +117,15 @@ struct Coord {
             Coord{x - 1, y    }
         };
     }
+};
+
+namespace std {
+    template <>
+    struct hash<Coord> {
+        std::size_t operator()(const Coord& c) const noexcept {
+            return (std::hash<int>()(c.x) ^ (std::hash<int>()(c.y) << 1));
+        }
+    };
 };
 
 #endif
