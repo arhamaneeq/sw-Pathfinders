@@ -3,25 +3,33 @@
 
 #include "types.hpp"
 #include "gameboard.hpp"
+#include "graph.hpp"
 
 class Solver {
     private:
-        Grid grid;
-        Coord starting, ending;
-        Algorithm algo;
-        Graph graph; //TODO: build Graph
 
-        void stepDjikstra();
+        Grid* grid;
+        Graph graph;
+        std::set<Coord> visited;
+        std::unordered_map<Coord, Coord> parent;
+        Coord starting, ending;
+        
+        Algorithm algo;
+        State state;
+        
+        void stepDjikstra(); // TODO:
         void stepAStar();
         void stepDFS();
         void stepBFS();
 
-        void setup();
     public:
-        Solver(const Grid& grid);
+        Solver(const Grid& grid); // TODO:
         ~Solver();
+        
+        void setup(); // TODO:
+        void reset();
 
-        void step();
+        void step(); // TODO:
 
         bool isStopped() const;
         std::vector<Coord> getPath() const;

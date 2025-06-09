@@ -8,6 +8,9 @@
 #include<iostream>
 #include<thread>
 #include<chrono>
+#include<algorithm>
+#include<set>
+#include<cmath>
 
 enum class cellType {
     Empty,
@@ -24,6 +27,13 @@ enum class Algorithm {
     BFS,
     DFS
     // TODO: add support for more algorithms, RRT/RRT*, etc.
+};
+
+enum class State {
+    NO_INIT,
+    INIT,
+    SOLVING,
+    SOLVED
 };
 
 struct Cell {
@@ -77,13 +87,38 @@ struct Coord {
         return {-x, -y};
     }
 
+    bool operator==(const Coord& Q) const {
+        return ((x == Q.x) && (y == Q.y));
+    }
+
+    bool operator!=(const Coord& Q) const {
+        return ((x != Q.x) || (y != Q.y));
+    }
+
     int manhattan() const {
         return std::abs(x) + std::abs(y);
     }
 
-    // float magnitude() const {
-    //     return std::sqrt(x*x + y*y);
-    // }
+    float magnitude() const {
+        return std::sqrt(x*x + y*y);
+    }
+
+    float magnitude() const {
+        return std::sqrt(x*x + y*y);
+    }
+
+    std::vector<Coord> adjacent() {
+        return {
+            Coord{x - 1, y - 1},
+            Coord{x,     y - 1},
+            Coord{x + 1, y - 1},
+            Coord{x + 1, y    },
+            Coord{x + 1, y + 1},
+            Coord{x    , y + 1},
+            Coord{x - 1, y + 1},
+            Coord{x - 1, y    }
+        };
+    }
 };
 
 #endif
