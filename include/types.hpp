@@ -10,6 +10,7 @@
 #include<chrono>
 #include<algorithm>
 #include<set>
+#include<cmath>
 
 enum class cellType {
     Empty,
@@ -99,7 +100,7 @@ struct Coord {
     }
 
     float magnitude() const {
-        return std::sqrtf(x*x + y*y);
+        return std::sqrt(x*x + y*y);
     }
 
     std::vector<Coord> adjacent() {

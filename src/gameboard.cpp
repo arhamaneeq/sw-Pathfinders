@@ -23,7 +23,6 @@ int Grid::getHeight() const {
     return height;
 }
 
-
 const Cell& Grid::getCell(const Coord& P) const {
     return grid[getIndex(P)];
 }
