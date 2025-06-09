@@ -103,10 +103,6 @@ struct Coord {
         return std::sqrt(x*x + y*y);
     }
 
-    float magnitude() const {
-        return std::sqrt(x*x + y*y);
-    }
-
     std::vector<Coord> adjacent() {
         return {
             Coord{x - 1, y - 1},
