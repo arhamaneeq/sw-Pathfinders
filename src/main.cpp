@@ -3,6 +3,7 @@
 #include "../include/gameboard.hpp"
 #include "../include/utils.hpp"
 #include "../include/errors.hpp"
+#include "../include/solver.hpp"
 
 int main() {
     Utils::enableAnsiSupport();
@@ -17,6 +18,7 @@ int main() {
     );
 
     Grid grid(Utils::getTerminalSize());
+    Solver solver(grid);
 
     /* --- PHASE 1: Loading Fakery --- */
     for (int frame = 0; frame < 100; frame++) {
@@ -93,17 +95,30 @@ int main() {
                 if (iss >> x >> y) {
                     grid.config.createTypeAt(Coord{x, y}, cellType::Goal);
                 }
+            } else if (cmd == "ALGO") {
+                std::string alg;
+                if (iss >> alg) {
+                    if (alg == "BFS") {solver.setAlgo(Algorithm::BFS);}
+                    if (alg == "DFS") {solver.setAlgo(Algorithm::DFS);}
+                    if (alg == "Djikstra") {solver.setAlgo(Algorithm::Djikstra);}
+                    if (alg == "AStar") {solver.setAlgo(Algorithm::AStar);}
+                }
             } else if (cmd == "RUN") {
+                solver.setup();
                 break;
             }
 
         }
+
     
         /* --- PHASE 3: Pathfinding --- */
         while (true) {
             renderer.clear();
             renderer.appendGrid(grid);
             renderer.render();
+
+            solver.step();
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
         }
     }
 }

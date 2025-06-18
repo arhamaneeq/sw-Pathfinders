@@ -73,6 +73,12 @@ void Renderer::appendGrid(const Grid& grid) {
                 case cellType::Visited:
                     outputBuffer << Ansi::Yellow;
                     break;
+                case cellType::Frontier:
+                    outputBuffer << Ansi::Red;
+                    break;
+                case cellType::Path:
+                    outputBuffer << Ansi::Green;
+                    break;
             }
 
             outputBuffer << "#";

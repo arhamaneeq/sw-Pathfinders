@@ -13,6 +13,7 @@
 #include<cmath>
 #include<unordered_map>
 #include<functional>
+#include<queue>
 
 struct Coord {
     int x, y;
@@ -90,7 +91,8 @@ enum class cellType {
     Start,
     Goal,
     Path,
-    Visited
+    Visited,
+    Frontier
 };
 
 struct Cell {
