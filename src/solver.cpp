@@ -69,7 +69,7 @@ void Solver::stepBFS() {
         return;
     }
 
-    grid.setCellType(current, cellType::Visited);
+    if (grid.getCell(current).type != cellType::Start) {grid.setCellType(current, cellType::Visited);}
 
     for (const Coord& neighbour : current.adjacent()) {
         if (cameFrom.count(neighbour) == 0 && grid.getCell(neighbour).type != cellType::Wall && grid.getCell(neighbour).type != cellType::Start) {
