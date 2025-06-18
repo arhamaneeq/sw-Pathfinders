@@ -1,10 +1,11 @@
 #include "../include/solver.hpp"
 
-Solver::Solver(Grid& grid) : grid(&grid), state(State::NO_INIT) {}
+Solver::Solver(Grid& grid) : grid(grid), state(State::NO_INIT), startpoint(Coord{-1, -1}), endpoint(Coord{-1, -1}) {}
+Solver::~Solver() = default;
 
 void Solver::setup() {
     //Find start and end points
-    for (Cell cell : grid->getBoard()) {
+    for (Cell cell : grid.getBoard()) {
         if (cell.type == cellType::Start) {startpoint = cell.coordinate;};
         if (cell.type == cellType::Goal) {endpoint = cell.coordinate;};
 
@@ -12,8 +13,8 @@ void Solver::setup() {
     }
 
     // set heuristics
-    for (Cell cell : grid->getBoard()) {
-        cell.heuristic = (cell.coordinate - endpoint).manhattan();
+    for (Cell cell : grid.getBoard()) {
+        grid.setCellHeuristic(cell.coordinate, (cell.coordinate - endpoint).manhattan());
     }
 
     state = State::INIT;
@@ -21,6 +22,10 @@ void Solver::setup() {
 
 void Solver::reset() {
     // TODO: how tf should this work
+}
+
+void Solver::setAlgo(Algorithm alg) {
+    algo = alg;
 }
 
 void Solver::stepDjikstra() {
@@ -32,7 +37,48 @@ void Solver::stepAStar() {
 }
 
 void Solver::stepBFS() {
-    // TODO:
+    if (state == State::INIT) {
+        frontier.push(startpoint);
+        cameFrom[startpoint] = startpoint;
+
+        state = State::SOLVING;
+
+        return;
+    }
+
+    if (frontier.empty()) {
+        state = State::SOLVED;
+        return;
+    }
+
+    if (state == State::SOLVED || state == State::NO_INIT) {return;}
+
+    Coord current = frontier.front();
+    frontier.pop();
+
+    if (current == endpoint) {
+        Coord step = endpoint;
+        while (step != startpoint) {
+            step = cameFrom[step];
+            if (step != startpoint) {
+                grid.setCellType(step, cellType::Path);
+            }
+        }
+
+        state = State::SOLVED;
+        return;
+    }
+
+    grid.setCellType(current, cellType::Visited);
+
+    for (const Coord& neighbour : current.adjacent()) {
+        if (cameFrom.count(neighbour) == 0 && grid.getCell(neighbour).type != cellType::Wall && grid.getCell(neighbour).type != cellType::Start) {
+            frontier.push(neighbour);
+            cameFrom[neighbour] = current;
+
+            if (neighbour != endpoint) {grid.setCellType(neighbour, cellType::Frontier);}
+        }
+    }
 }
 
 void Solver::stepDFS() {
