@@ -26,6 +26,8 @@ void Solver::reset() {
 
 void Solver::setAlgo(Algorithm alg) {
     algo = alg;
+    if (alg == Algorithm::BFS) {frontier = std::queue<Coord>();}
+    if (alg == Algorithm::DFS) {frontier = std::stack<Coord>();}
 }
 
 void Solver::stepDjikstra() {
@@ -86,7 +88,52 @@ void Solver::stepBFS() {
 }
 
 void Solver::stepDFS() {
-    // TODO:
+    auto get = [](auto& var) -> std::stack<Coord>& {
+        return std::get<std::stack<Coord>>(var);
+    };
+
+    if (state == State::INIT) {
+        get(frontier).push(startpoint);
+        cameFrom[startpoint] = startpoint;
+
+        state = State::SOLVING;
+        return;
+    }
+
+    if (state == State::SOLVED || state == State::NO_INIT) {
+        return;
+    }
+
+    if (get(frontier).empty()) {
+        state = State::SOLVED;
+        return;
+    }
+
+    Coord current = get(frontier).top();
+    get(frontier).pop();
+
+    if (current == endpoint) {
+        Coord step = endpoint;
+        while (step != startpoint) {
+            step = cameFrom[step];
+
+            if (step != startpoint) {grid.setCellType(step, cellType::Path);}
+        }
+
+        state = State::SOLVED;
+        return;
+    }
+
+    if (grid.getCell(current).type != cellType::Start) {grid.setCellType(current, cellType::Visited);}
+
+    for (const Coord& neighbour : current.adjacent()) {
+        if (cameFrom.count(neighbour) == 0 && grid.getCell(neighbour).type != cellType::Wall && grid.getCell(neighbour).type != cellType::Start) {
+            get(frontier).push(neighbour);
+            cameFrom[neighbour] = current;
+
+            if (neighbour != endpoint) {grid.setCellType(neighbour, cellType::Frontier);}
+        }
+    }
 }
 
 void Solver::step() {
