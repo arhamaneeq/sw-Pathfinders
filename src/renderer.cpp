@@ -65,16 +65,16 @@ void Renderer::appendGrid(const Grid& grid) {
                     outputBuffer << Ansi::White;
                     break;
                 case cellType::Start:
-                    outputBuffer << Ansi::Blue;
-                    break;
-                case cellType::Goal:
-                    outputBuffer << Ansi::Magenta;
-                    break;
-                case cellType::Visited:
                     outputBuffer << Ansi::Yellow;
                     break;
-                case cellType::Frontier:
+                case cellType::Goal:
                     outputBuffer << Ansi::Red;
+                    break;
+                case cellType::Visited:
+                    outputBuffer << Ansi::Blue;
+                    break;
+                case cellType::Frontier:
+                    outputBuffer << Ansi::Cyan;
                     break;
                 case cellType::Path:
                     outputBuffer << Ansi::Green;

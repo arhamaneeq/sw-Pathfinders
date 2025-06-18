@@ -127,6 +127,14 @@ namespace Ansi {
     constexpr const char* Magenta   = "\033[35m";
     constexpr const char* Cyan      = "\033[36m";
     constexpr const char* White     = "\033[37m";
+    constexpr const char* Grey      = "\033[90m";
+    constexpr const char* Terracotta= "\033[91m";
+    constexpr const char* Lime      = "\033[92m";
+    constexpr const char* Sunny     = "\033[93m";
+    constexpr const char* SkyBlue   = "\033[94m";
+    constexpr const char* Pink      = "\033[95m";
+    constexpr const char* Electric  = "\033[96m";
+
     constexpr const char* DefaultFG = "\033[39m";
 
     constexpr const char* ClearScreen   = "\033[2J";
