@@ -10,5 +10,7 @@ namespace Utils {
     bool getAnsiSupport();
 
     void enableAnsiSupport();
+
+    void wait(int ms);
 }
 #endif

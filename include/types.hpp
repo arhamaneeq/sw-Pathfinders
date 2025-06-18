@@ -85,6 +85,14 @@ enum class State {
     SOLVED
 };
 
+enum class UIState {
+    LOADING,
+    SETUP,
+    SOLVING,
+    SOLVED,
+    END
+};
+
 enum class cellType {
     Empty,
     Wall,
