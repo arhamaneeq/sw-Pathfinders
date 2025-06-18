@@ -2,17 +2,46 @@
 #include "../include/types.hpp"
 #include "../include/errors.hpp"
 
-Grid::Grid(std::pair<int, int> wd) : width(wd.first), height(wd.second), grid((wd.first + 2) * (wd.second + 2)), config(this) {}
+Grid::Grid(std::pair<int, int> wd) : width(wd.first), height(wd.second), grid((wd.first + 2) * (wd.second + 2)), config(this) {
+    for (int y = -1; y < height + 1; y++) {
+        for (int x = -1; x < width + 1; x++) {
+            grid[getIndex(Coord{x, y})].coordinate = Coord{x, y};
+            if (
+                x == -1 || y == -1 || 
+                x == width || y == width
+            ) {grid[getIndex(Coord{x, y})].type = cellType::Wall;}
+        }
+    }
+}
+
 Grid::~Grid() = default;
 
 int Grid::getIndex(const Coord& P) const {
-    int x = P.x, y = P.y;
+    int x = P.x + 1;
+    int y = P.y + 1;
 
-    x++; y++;
-    if (x < 0 || y < 0 || x > width || y > height) {
+    if (x < 0 || y < 0 || x > width + 1 || y > height + 1) {
         Errors::outOfBoundingBox(x, y, width, height);
     }
-    return x + y * width;
+    return x + y * (width + 2);
+}
+
+const std::vector<Cell> Grid::getBoard() const {
+    std::vector<Cell> result;
+    result.reserve(width * height);
+
+    for (const Cell& cell : grid) {
+        if (
+            cell.coordinate.x == 0 || cell.coordinate.x == width ||
+            cell.coordinate.y == 0 || cell.coordinate.y == height
+        ) {
+            continue;
+        } else {
+            result.emplace_back(cell);
+        };
+    }
+
+    return result;
 }
 
 int Grid::getWidth() const {

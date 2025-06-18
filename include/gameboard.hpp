@@ -17,6 +17,7 @@ class Grid {
         ~Grid();
 
         const Cell&   getCell(const Coord& P) const;
+        const std::vector<Cell> getBoard() const;
 
         int getWidth() const;
         int getHeight() const;

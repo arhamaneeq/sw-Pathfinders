@@ -1,5 +1,8 @@
 #include "../include/adjlist.hpp"
 
+AdjacencyList::AdjacencyList() : numNodes(0), numEdges(0), adj(0) {} // TODO: does this even makes sense
+AdjacencyList::~AdjacencyList() = default;
+
 bool AdjacencyList::hasNode(const Coord& P) const {
     return !(adj.find(P) == adj.end());
 }

@@ -1,5 +1,8 @@
 #include "../include/graph.hpp"
 
+Graph::Graph() : isDirected(true) {}
+Graph::~Graph() = default;
+
 bool Graph::hasNode(const Coord& P) const {
     return adjacencyList.hasNode(P);
 }

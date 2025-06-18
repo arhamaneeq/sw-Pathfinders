@@ -12,7 +12,7 @@ class Solver {
         Graph graph;
         std::set<Coord> visited;
         std::unordered_map<Coord, Coord> parent;
-        Coord starting, ending;
+        Coord startpoint, endpoint;
         
         Algorithm algo;
         State state;
@@ -23,7 +23,7 @@ class Solver {
         void stepBFS();
 
     public:
-        Solver(const Grid& grid); // TODO:
+        Solver(Grid& grid); // TODO:
         ~Solver();
         
         void setup(); // TODO:
