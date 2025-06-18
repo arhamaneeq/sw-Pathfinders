@@ -37,8 +37,12 @@ void Solver::stepAStar() {
 }
 
 void Solver::stepBFS() {
+    auto get = [](auto& var) -> std::queue<Coord>& {
+        return std::get<std::queue<Coord>>(var);
+    };
+
     if (state == State::INIT) {
-        frontier.push(startpoint);
+        get(frontier).push(startpoint);
         cameFrom[startpoint] = startpoint;
 
         state = State::SOLVING;
@@ -46,15 +50,15 @@ void Solver::stepBFS() {
         return;
     }
 
-    if (frontier.empty()) {
+    if (get(frontier).empty()) {
         state = State::SOLVED;
         return;
     }
 
     if (state == State::SOLVED || state == State::NO_INIT) {return;}
 
-    Coord current = frontier.front();
-    frontier.pop();
+    Coord current = get(frontier).front();
+    get(frontier).pop();
 
     if (current == endpoint) {
         Coord step = endpoint;
@@ -73,7 +77,7 @@ void Solver::stepBFS() {
 
     for (const Coord& neighbour : current.adjacent()) {
         if (cameFrom.count(neighbour) == 0 && grid.getCell(neighbour).type != cellType::Wall && grid.getCell(neighbour).type != cellType::Start) {
-            frontier.push(neighbour);
+            get(frontier).push(neighbour);
             cameFrom[neighbour] = current;
 
             if (neighbour != endpoint) {grid.setCellType(neighbour, cellType::Frontier);}

@@ -14,6 +14,8 @@
 #include<unordered_map>
 #include<functional>
 #include<queue>
+#include<variant>
+#include<stack>
 
 struct Coord {
     int x, y;
