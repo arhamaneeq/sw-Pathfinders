@@ -61,12 +61,12 @@ int main() {
         state = UIState::SETUP;
     }
 
-    while (state != UIState::END) {
+    while (state == UIState::SETUP) {
         /* --- PHASE 2: Input Section --- */
         while (state == UIState::SETUP) {
             renderer.clear();
             renderer.appendGrid(grid);
-            renderer.appendInput(" >>>", {Ansi::Yellow});
+            renderer.appendInput(" >>> ", {Ansi::Yellow});
             renderer.render();
     
             std::string input, cmd;
@@ -111,10 +111,9 @@ int main() {
                 }
             } else if (cmd == "RUN") {
                 solver.setup();
-                state == UIState::SOLVING;
+                state = UIState::SOLVING;
                 break;
             }
-
         }
     
         /* --- PHASE 3: Pathfinding --- */
@@ -124,17 +123,24 @@ int main() {
             renderer.render();
 
             solver.step();
-            if (solver.isStopped()) {state == UIState::SOLVED;}
+            if (solver.isStopped()) {state = UIState::SOLVED;}
             Utils::wait(MSPERFRAME);
         }
 
         while (state == UIState::SOLVED) {
             renderer.clear();
             renderer.appendGrid(grid);
+            renderer.appendInput(" >>> ", {Ansi::Yellow});
             renderer.render();
 
-            Utils::wait(5000); // TODO: accept keypress from user
-            state == UIState::END;
+            std::string input, cmd;
+            std::getline(std::cin, input);
+            std::istringstream iss(input);
+
+            iss >> cmd;
+
+            if (cmd == "END") {state == UIState::END;}
+            if (cmd == "RETRY") {state == UIState::SETUP;}
         }
     }
 }
