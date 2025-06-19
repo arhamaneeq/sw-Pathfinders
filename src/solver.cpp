@@ -28,7 +28,7 @@ void Solver::setAlgo(Algorithm alg) {
     algo = alg;
     if (alg == Algorithm::BFS) {frontier = std::queue<Coord>();}
     if (alg == Algorithm::DFS) {frontier = std::stack<Coord>();}
-    if (alg == Algorithm::Djikstra) {frontier = std::priority_queue<std::pair<float, Coord>,std::vector<std::pair<float, Coord>>,std::greater<>>();}
+    if (alg == Algorithm::Djikstra || alg == Algorithm::AStar) {frontier = std::priority_queue<std::pair<float, Coord>,std::vector<std::pair<float, Coord>>,std::greater<>>();}
 }
 
 void Solver::stepBFS() {                                // FIXME: BFS breaks at bottom boundary
@@ -187,11 +187,67 @@ void Solver::stepDjikstra() {
             }
         }
     }
-
 }
 
-void Solver::stepAStar() {
-    // TODO:
+void Solver::stepAStar() {  // FIXME: broken near walls
+    auto get = [](auto& var) -> std::priority_queue<std::pair<float, Coord>,std::vector<std::pair<float, Coord>>,std::greater<>>& {
+        return std::get<std::priority_queue<std::pair<float, Coord>,std::vector<std::pair<float, Coord>>,std::greater<>>>(var);
+    };
+
+    if (state == State::INIT) {
+        get(frontier).push({0.0f, startpoint});
+        cameFrom[startpoint] = startpoint;
+        grid.setCellCost(startpoint, 0.0f);
+        
+        state = State::SOLVING;
+        return;
+    }
+
+    if (state == State::SOLVED || state == State::NO_INIT) {return;}
+
+    if (get(frontier).empty()) {
+        state = State::SOLVED;
+        return;
+    }
+
+    Coord current = get(frontier).top().second;
+    get(frontier).pop();
+    
+    if (current == endpoint) {
+        Coord step = endpoint;
+        while (step != startpoint) {
+            step = cameFrom[step];
+            if (step != startpoint) {
+                grid.setCellType(step, cellType::Path);
+            }
+        }
+
+        state = State::SOLVED;
+        return;
+    }
+
+    if (grid.getCell(current).type != cellType::Start) {
+        grid.setCellType(current, cellType::Visited);
+    }
+
+    float currentCost = grid.getCell(current).cost;
+
+    for (const Coord& neighbour : current.adjacent()) {
+        if (grid.getCell(neighbour).type != cellType::Wall && grid.getCell(neighbour).type != cellType::Start) {
+            float newCost = currentCost + 1.0f;
+
+            if (cameFrom.count(neighbour) == 0 || newCost < grid.getCell(neighbour).cost) {
+                cameFrom[neighbour] = current;
+                grid.setCellCost(neighbour, newCost);
+
+                float priority = newCost + grid.getCell(neighbour).heuristic;
+                get(frontier).push({priority, neighbour});
+                if (neighbour != endpoint) {
+                    grid.setCellType(neighbour, cellType::Frontier);
+                }
+            }
+        }
+    }
 }
 
 void Solver::step() {
