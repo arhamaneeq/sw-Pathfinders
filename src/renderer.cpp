@@ -11,6 +11,8 @@ void Renderer::clear() {
 }
 
 void Renderer::render() {
+    if (frame >= tooltip.startingFrame && frame < tooltip.startingFrame + tooltip.duration) {renderTooltip();};
+
     outputBuffer << Ansi::DefaultFG;
     std::cout << outputBuffer.str() << std::flush;
     frame++;
@@ -124,5 +126,35 @@ void Renderer::appendInput(std::string txt, Styles styles) {
     for (auto style : styles) {outputBuffer << std::string(style);}
     outputBuffer << txt << Ansi::Reset << Ansi::CursorSave;
     for (int i = 0; i < vw - txt.length(); i++) {outputBuffer << " ";}
+    outputBuffer << Ansi::CursorRestore;
+}
+
+void Renderer::appendTooltip(std::string txt, std::string title, int duration) {
+    tooltip.startingFrame = frame;
+    tooltip.duration = duration;
+    tooltip.title = title;
+    tooltip.text = txt;
+    tooltip.width = 30;
+}
+
+void Renderer::renderTooltip() {
+    int titleLen = tooltip.title.length();
+    int textLen = tooltip.text.length();
+
+    outputBuffer << Ansi::CursorSave << Ansi::CursorHome;
+    outputBuffer << Ansi::CursorDown(2);
+    outputBuffer << Ansi::CursorRight(2);
+
+    for (int i = 0; i < tooltip.width; i++) {outputBuffer << "-";}
+    outputBuffer << Ansi::CursorLeft(tooltip.width) << Ansi::CursorDown();
+    outputBuffer << "| " << tooltip.title;
+    for (int i = 0; i < tooltip.width - 4 - titleLen; i++) {outputBuffer << " ";}
+    outputBuffer << " |";
+    outputBuffer << Ansi::CursorLeft(tooltip.width) << Ansi::CursorDown();
+    outputBuffer << "| " << tooltip.text;
+    for (int i = 0; i < tooltip.width - 4 - textLen; i++) {outputBuffer << " ";}
+    outputBuffer << " |";
+    outputBuffer << Ansi::CursorLeft(tooltip.width) << Ansi::CursorDown();
+    for (int i = 0; i < tooltip.width; i++) {outputBuffer << "-";}
     outputBuffer << Ansi::CursorRestore;
 }

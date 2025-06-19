@@ -143,10 +143,22 @@ namespace Ansi {
     constexpr const char* CursorSave    = "\033[s";
     constexpr const char* CursorRestore = "\033[u";
 
+    inline std::string CursorUp(int n = 1)      {return "\033[" + std::to_string(n) + "A";}
+    inline std::string CursorDown(int n = 1)    {return "\033[" + std::to_string(n) + "B";}
+    inline std::string CursorRight(int n = 1)   {return "\033[" + std::to_string(n) + "C";}
+    inline std::string CursorLeft(int n = 1)    {return "\033[" + std::to_string(n) + "D";}
+
     constexpr const char* CursorHide    = "\033[?25l";
     constexpr const char* CursorShow    = "\033[?25h";
-
 }
+
+struct ToolTip {
+    std::string title;
+    std::string text;
+    int startingFrame, duration;
+
+    int width;
+};
 
 
 #endif

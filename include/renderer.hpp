@@ -9,15 +9,17 @@ class Renderer {
         using Styles = std::initializer_list<std::string_view>;
 
         int frame;
+
         int vw, vh;
         bool colourSupport;
         bool ansiSupport;
 
+        ToolTip tooltip;
+        
         std::ostringstream outputBuffer;
 
-        char full, empty;
-
         void clearScreen();
+        void renderTooltip();
     public:
 
         Renderer(std::pair<int, int> viewport, bool colourSupport, bool ansiSupport); 
@@ -42,6 +44,7 @@ class Renderer {
         void appendText(std::string txt, Styles styles = {}, bool newLine = true);
         void appendTextCenter(std::string txt, Styles styles = {});
         void appendInput(std::string txt, Styles styles = {});
+        void appendTooltip(std::string txt, std::string title, int duration = 50);
 
 };
 
