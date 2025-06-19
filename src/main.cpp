@@ -108,14 +108,14 @@ int main() {
                     else if (alg == "DFS") {solver.setAlgo(Algorithm::DFS);}
                     else if (alg == "Djikstra") {solver.setAlgo(Algorithm::Djikstra);}
                     else if (alg == "AStar") {solver.setAlgo(Algorithm::AStar);}
-                    else {renderer.appendTooltip("Enter a supported algorithm", "Invalid Algo", 1);};
+                    else {renderer.appendTooltip("Invalid Algo", "Enter a supported algorithm", {Ansi::Sunny});};
                 }
             } else if (cmd == "RUN") {
                 solver.setup();
                 state = UIState::SOLVING;
                 break;
             } else {
-                renderer.appendTooltip("Enter a valid command", "Invalid Command", 1);
+                renderer.appendTooltip("Invalid Command", "Enter a valid command", {Ansi::Red});
             }
         }
     

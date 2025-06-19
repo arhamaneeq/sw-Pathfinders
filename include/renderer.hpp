@@ -45,7 +45,7 @@ class Renderer {
         void appendText(String txt, Styles styles = {}, bool newLine = true);
         void appendTextCenter(String txt, Styles styles = {});
         void appendInput(String txt, Styles styles = {});
-        void appendTooltip(String txt, String title, int duration = 50);
+        void appendTooltip(String title, String text, Styles styles, int duration = 1);
 
 };
 

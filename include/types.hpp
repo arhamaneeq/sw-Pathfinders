@@ -156,7 +156,7 @@ struct ToolTip {
     std::string title;
     std::string text;
     int startingFrame, duration;
-
+    std::initializer_list<std::string_view> styles;
     int width;
 };
 

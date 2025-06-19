@@ -129,12 +129,13 @@ void Renderer::appendInput(String txt, Styles styles) {
     outputBuffer << Ansi::CursorRestore;
 }
 
-void Renderer::appendTooltip(String txt, String title, int duration) {
+void Renderer::appendTooltip(String title, String text, Styles styles, int duration) {
     tooltip.startingFrame = frame;
     tooltip.duration = duration;
     tooltip.title = title;
-    tooltip.text = txt;
+    tooltip.text = text;
     tooltip.width = 30;
+    tooltip.styles = styles;
 }
 
 void Renderer::renderTooltip() {
@@ -147,7 +148,9 @@ void Renderer::renderTooltip() {
 
     for (int i = 0; i < tooltip.width; i++) {outputBuffer << "-";}
     outputBuffer << Ansi::CursorLeft(tooltip.width) << Ansi::CursorDown();
-    outputBuffer << "| " << tooltip.title;
+    outputBuffer << "| ";
+    for (auto style : tooltip.styles) {outputBuffer << String(style);}
+    outputBuffer << tooltip.title << Ansi::Reset;
     for (int i = 0; i < tooltip.width - 4 - titleLen; i++) {outputBuffer << " ";}
     outputBuffer << " |";
     outputBuffer << Ansi::CursorLeft(tooltip.width) << Ansi::CursorDown();
