@@ -105,14 +105,17 @@ int main() {
                 std::string alg;
                 if (iss >> alg) {
                     if (alg == "BFS") {solver.setAlgo(Algorithm::BFS);}
-                    if (alg == "DFS") {solver.setAlgo(Algorithm::DFS);}
-                    if (alg == "Djikstra") {solver.setAlgo(Algorithm::Djikstra);}
-                    if (alg == "AStar") {solver.setAlgo(Algorithm::AStar);}
+                    else if (alg == "DFS") {solver.setAlgo(Algorithm::DFS);}
+                    else if (alg == "Djikstra") {solver.setAlgo(Algorithm::Djikstra);}
+                    else if (alg == "AStar") {solver.setAlgo(Algorithm::AStar);}
+                    else {renderer.appendTooltip("Enter a supported algorithm", "Invalid Algo", 1);};
                 }
             } else if (cmd == "RUN") {
                 solver.setup();
                 state = UIState::SOLVING;
                 break;
+            } else {
+                renderer.appendTooltip("Enter a valid command", "Invalid Command", 1);
             }
         }
     
