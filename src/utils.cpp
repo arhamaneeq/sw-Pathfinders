@@ -1,5 +1,9 @@
 #include "../include/utils.hpp"
 
+void Utils::wait(int t) {
+    std::this_thread::sleep_for(std::chrono::milliseconds(t));
+}
+
 #if defined(__unix__) || defined(__APPLE__)
 
 #include <sys/ioctl.h>

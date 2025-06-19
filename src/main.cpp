@@ -19,9 +19,14 @@ int main() {
 
     Grid grid(Utils::getTerminalSize());
     Solver solver(grid);
+    UIState state = UIState::LOADING;
+
+    const float LOADFRAME = 50;
+    const int MSPERFRAME = 40; // 25 FPS
+
 
     /* --- PHASE 1: Loading Fakery --- */
-    for (int frame = 0; frame < 100; frame++) {
+    for (int frame = 0; frame < LOADFRAME; frame++) {
         renderer.clear();
         renderer.appendEmpty();
         renderer.appendTextCenter("Pathfinders", {Ansi::Bold});
@@ -29,10 +34,10 @@ int main() {
         renderer.appendEmpty();
         renderer.appendTextCenter("github.com/arhamaneeq", {Ansi::Cyan});
         renderer.appendLine();
-        renderer.appendProgressBar(frame / 100.0f);
+        renderer.appendProgressBar(frame / LOADFRAME);
         renderer.appendLine();
 
-        if (frame >= 25) {
+        if (frame >= 0.25 * LOADFRAME) {
             renderer.appendTextCenter("Instructions can be found at");
             renderer.appendTextCenter("readme.md", {Ansi::Yellow});
             renderer.appendEmpty();
@@ -41,26 +46,27 @@ int main() {
             renderer.appendText("to force stop if loop is stuck.");
         }
 
-        if (frame >= 50) {
+        if (frame >= 0.5 * LOADFRAME) {
             renderer.appendText("renderer::getColourSupport(): ", {}, false);
             [&](bool v){renderer.appendText(v ? "True" : "False", {v ? Ansi::Green : Ansi::Red});}(renderer.getColourSupport());
         }
-        if (frame >= 55) {
+        if (frame >= 0.55 * LOADFRAME) {
             renderer.appendText("renderer::getAnsiSupport():   ", {}, false);
             [&](bool v){renderer.appendText(v ? "True" : "False", {v ? Ansi::Green : Ansi::Red});}(renderer.getAnsiSupport());
         }
 
         renderer.render();
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        Utils::wait(MSPERFRAME);
+        state = UIState::SETUP;
     }
 
-    while (true) {
+    while (state == UIState::SETUP) {
         /* --- PHASE 2: Input Section --- */
-        while (true) {
+        while (state == UIState::SETUP) {
             renderer.clear();
             renderer.appendGrid(grid);
-            renderer.appendInput(" >>>", {Ansi::Yellow});
+            renderer.appendInput(" >>> ", {Ansi::Yellow});
             renderer.render();
     
             std::string input, cmd;
@@ -99,26 +105,45 @@ int main() {
                 std::string alg;
                 if (iss >> alg) {
                     if (alg == "BFS") {solver.setAlgo(Algorithm::BFS);}
-                    if (alg == "DFS") {solver.setAlgo(Algorithm::DFS);}
-                    if (alg == "Djikstra") {solver.setAlgo(Algorithm::Djikstra);}
-                    if (alg == "AStar") {solver.setAlgo(Algorithm::AStar);}
+                    else if (alg == "DFS") {solver.setAlgo(Algorithm::DFS);}
+                    else if (alg == "Djikstra") {solver.setAlgo(Algorithm::Djikstra);}
+                    else if (alg == "AStar") {solver.setAlgo(Algorithm::AStar);}
+                    else {renderer.appendTooltip("Invalid Algo", "Enter a supported algorithm", {Ansi::Sunny});};
                 }
             } else if (cmd == "RUN") {
                 solver.setup();
+                state = UIState::SOLVING;
                 break;
+            } else {
+                renderer.appendTooltip("Invalid Command", "Enter a valid command", {Ansi::Red});
             }
-
         }
-
     
         /* --- PHASE 3: Pathfinding --- */
-        while (true) {
+        while (state == UIState::SOLVING) {
             renderer.clear();
             renderer.appendGrid(grid);
             renderer.render();
 
             solver.step();
-            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            if (solver.isStopped()) {state = UIState::SOLVED;}
+            Utils::wait(MSPERFRAME);
+        }
+
+        while (state == UIState::SOLVED) {
+            renderer.clear();
+            renderer.appendGrid(grid);
+            renderer.appendInput(" >>> ", {Ansi::Yellow});
+            renderer.render();
+
+            std::string input, cmd;
+            std::getline(std::cin, input);
+            std::istringstream iss(input);
+
+            iss >> cmd;
+
+            if (cmd == "END") {state == UIState::END;}
+            if (cmd == "RETRY") {state == UIState::SETUP;}
         }
     }
 }

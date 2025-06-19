@@ -7,17 +7,20 @@
 class Renderer {
     private:
         using Styles = std::initializer_list<std::string_view>;
+        using String = std::string;
 
         int frame;
+
         int vw, vh;
         bool colourSupport;
         bool ansiSupport;
 
+        ToolTip tooltip;
+        
         std::ostringstream outputBuffer;
 
-        char full, empty;
-
         void clearScreen();
+        void renderTooltip();
     public:
 
         Renderer(std::pair<int, int> viewport, bool colourSupport, bool ansiSupport); 
@@ -39,9 +42,10 @@ class Renderer {
         void appendEmpty();
         void appendProgressBar(float percentProgress); 
 
-        void appendText(std::string txt, Styles styles = {}, bool newLine = true);
-        void appendTextCenter(std::string txt, Styles styles = {});
-        void appendInput(std::string txt, Styles styles = {});
+        void appendText(String txt, Styles styles = {}, bool newLine = true);
+        void appendTextCenter(String txt, Styles styles = {});
+        void appendInput(String txt, Styles styles = {});
+        void appendTooltip(String title, String text, Styles styles, int duration = 1);
 
 };
 
