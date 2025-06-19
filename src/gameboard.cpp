@@ -3,8 +3,8 @@
 #include "../include/errors.hpp"
 
 Grid::Grid(std::pair<int, int> wd) : width(wd.first), height(wd.second), grid((wd.first + 2) * (wd.second + 2)), config(this) {
-    for (int y = -1; y < height + 1; y++) {
-        for (int x = -1; x < width + 1; x++) {
+    for (int y = -1; y < height + 1; y++) {                         // REVIEW: BFS/DFS break at bottom boundary
+        for (int x = -1; x < width + 1; x++) {                      // REVIEW: Check conditions
             grid[getIndex(Coord{x, y})].coordinate = Coord{x, y};
             if (
                 x == -1 || y == -1 || 

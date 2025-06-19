@@ -60,6 +60,10 @@ struct Coord {
             Coord{x - 1, y    }
         };
     }
+
+    bool operator<(const Coord& other) const {
+        return std::tie(x, y) < std::tie(other.x, other.y);
+    }
 };
 
 namespace std {
@@ -131,8 +135,6 @@ namespace Ansi {
 
     constexpr const char* CursorHide    = "\033[?25l";
     constexpr const char* CursorShow    = "\033[?25h";
-
 }
-
 
 #endif
