@@ -10,7 +10,12 @@ class Solver {
 
         Grid& grid;
         Graph graph;
-        std::queue<Coord> frontier;
+        std::variant<std::stack<Coord>,
+                     std::queue<Coord>,
+                     std::priority_queue<std::pair<float, Coord>,
+                                         std::vector<std::pair<float, Coord>>,
+                                         std::greater<>>> frontier;
+
         std::unordered_map<Coord, Coord> cameFrom;
         std::set<Coord> visited;
         std::unordered_map<Coord, Coord> parent;

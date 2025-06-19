@@ -14,6 +14,8 @@
 #include<unordered_map>
 #include<functional>
 #include<queue>
+#include<variant>
+#include<stack>
 
 struct Coord {
     int x, y;
@@ -57,6 +59,10 @@ struct Coord {
             Coord{x - 1, y + 1},
             Coord{x - 1, y    }
         };
+    }
+
+    bool operator<(const Coord& other) const {
+        return std::tie(x, y) < std::tie(other.x, other.y);
     }
 };
 
