@@ -104,14 +104,14 @@ void Renderer::appendEmpty() {
     outputBuffer << "\n";
 }
 
-void Renderer::appendText(std::string txt, Styles styles, bool newLine) {
-    for (auto style : styles) {outputBuffer << std::string(style);}
+void Renderer::appendText(String txt, Styles styles, bool newLine) {
+    for (auto style : styles) {outputBuffer << String(style);}
     outputBuffer << txt << Ansi::Reset <<  ((newLine) ? "\n" : "");
 }
 
-void Renderer::appendTextCenter(std::string txt, Styles styles) {
+void Renderer::appendTextCenter(String txt, Styles styles) {
     for (int i = 0; i < 0.5*(vw - txt.length()); i++) {outputBuffer << " ";}
-    for (auto style : styles) {outputBuffer << std::string(style);}
+    for (auto style : styles) {outputBuffer << String(style);}
     outputBuffer << txt << Ansi::Reset << "\n";
 }
 
@@ -122,14 +122,14 @@ void Renderer::appendProgressBar(float percentProgress) {
     outputBuffer << "\n";
 }
 
-void Renderer::appendInput(std::string txt, Styles styles) {
-    for (auto style : styles) {outputBuffer << std::string(style);}
+void Renderer::appendInput(String txt, Styles styles) {
+    for (auto style : styles) {outputBuffer << String(style);}
     outputBuffer << txt << Ansi::Reset << Ansi::CursorSave;
     for (int i = 0; i < vw - txt.length(); i++) {outputBuffer << " ";}
     outputBuffer << Ansi::CursorRestore;
 }
 
-void Renderer::appendTooltip(std::string txt, std::string title, int duration) {
+void Renderer::appendTooltip(String txt, String title, int duration) {
     tooltip.startingFrame = frame;
     tooltip.duration = duration;
     tooltip.title = title;

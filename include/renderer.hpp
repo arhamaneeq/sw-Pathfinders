@@ -7,6 +7,7 @@
 class Renderer {
     private:
         using Styles = std::initializer_list<std::string_view>;
+        using String = std::string;
 
         int frame;
 
@@ -41,10 +42,10 @@ class Renderer {
         void appendEmpty();
         void appendProgressBar(float percentProgress); 
 
-        void appendText(std::string txt, Styles styles = {}, bool newLine = true);
-        void appendTextCenter(std::string txt, Styles styles = {});
-        void appendInput(std::string txt, Styles styles = {});
-        void appendTooltip(std::string txt, std::string title, int duration = 50);
+        void appendText(String txt, Styles styles = {}, bool newLine = true);
+        void appendTextCenter(String txt, Styles styles = {});
+        void appendInput(String txt, Styles styles = {});
+        void appendTooltip(String txt, String title, int duration = 50);
 
 };
 
