@@ -148,8 +148,14 @@ int main() {
 
             iss >> cmd;
 
-            if (cmd == "END") {state == UIState::END;}
-            if (cmd == "RETRY") {state == UIState::SETUP;}
+            if (cmd == "END") {return 0;}
+            if (cmd == "RETRY") {solver.reset(); state = UIState::SETUP;}  // TODO: define how reset works
+
+            renderer.appendTooltip("Invalid Command", "Valid commands are END/RETRY", {Ansi::Terracotta});
         }
+    }
+
+    if (state == UIState::END) {
+        return 0;
     }
 }
