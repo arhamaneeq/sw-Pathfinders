@@ -7,7 +7,7 @@ Renderer::~Renderer() = default;
 void Renderer::clear() {
     outputBuffer.str("");
     outputBuffer.clear();
-    outputBuffer << Ansi::CursorHome;
+    outputBuffer << Ansi::CursorHome << Ansi::CursorHide;
 }
 
 void Renderer::render() {
@@ -126,7 +126,7 @@ void Renderer::appendInput(String txt, Styles styles) {
     for (auto style : styles) {outputBuffer << String(style);}
     outputBuffer << txt << Ansi::Reset << Ansi::CursorSave;
     for (int i = 0; i < vw - txt.length(); i++) {outputBuffer << " ";}
-    outputBuffer << Ansi::CursorRestore;
+    outputBuffer << Ansi::CursorRestore << Ansi::CursorShow;
 }
 
 void Renderer::appendTooltip(String title, String text, Styles styles, int duration) {
@@ -134,7 +134,7 @@ void Renderer::appendTooltip(String title, String text, Styles styles, int durat
     tooltip.duration = duration;
     tooltip.title = title;
     tooltip.text = text;
-    tooltip.width = 30;
+    tooltip.width = std::max(std::max(title.length() + 5, text.length() + 5), static_cast<size_t>(20));
     tooltip.styles = styles;
 }
 

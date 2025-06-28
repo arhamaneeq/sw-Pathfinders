@@ -114,14 +114,15 @@ int main() {
                 int SetupResult = solver.setup();
                 if (SetupResult == 0) {
                     state = UIState::SOLVING;
+                    renderer.appendTooltip("Starting", "Successfully running.", {Ansi::Green}, 10);
                     break;
                 } else if (SetupResult == 1) {
-                    renderer.appendTooltip("Key Points Needed", "Start/End point missing.", {Ansi::Red});
+                    renderer.appendTooltip("Key Points not Set", "Start or End point missing.", {Ansi::Red});
                 } else if (SetupResult == 2) {
-                    renderer.appendTooltip("Algo not Set", "Set a valid algorithm to RUN", {Ansi::Red});
+                    renderer.appendTooltip("Algo not Set", "Set a valid algorithm to RUN.", {Ansi::Red});
                 }
             } else {
-                renderer.appendTooltip("Invalid Command", "Enter a valid command", {Ansi::Sunny});
+                renderer.appendTooltip("Invalid Command", "Enter a supported command.", {Ansi::Sunny});
             }
         }
     
@@ -149,9 +150,9 @@ int main() {
             iss >> cmd;
 
             if (cmd == "END") {return 0;}
-            if (cmd == "RETRY") {solver.reset(); state = UIState::SETUP;}  // TODO: define how reset works
+            if (cmd == "RESET") {solver.reset(); state = UIState::SETUP;}  // TODO: define how reset works // FIXME:
 
-            renderer.appendTooltip("Invalid Command", "Valid commands are END/RETRY", {Ansi::Terracotta});
+            renderer.appendTooltip("Invalid Command", "Valid commands are END or RESET", {Ansi::Terracotta});
         }
     }
 
