@@ -1,9 +1,13 @@
 #include "../include/solver.hpp"
 
-Solver::Solver(Grid& grid) : grid(grid), state(State::NO_INIT), startpoint(Coord{-1, -1}), endpoint(Coord{-1, -1}) {}
+Solver::Solver(Grid& grid) : grid(grid), state(State::NO_INIT), startpoint(Coord{-1, -1}), endpoint(Coord{-1, -1}), algo(Algorithm::NONE) {}
 Solver::~Solver() = default;
 
-void Solver::setup() {
+int Solver::setup() {
+    if (algo == Algorithm::NONE) {
+        return 2;
+    }
+
     //Find start and end points
     for (Cell cell : grid.getBoard()) {
         if (cell.type == cellType::Start) {startpoint = cell.coordinate;};
@@ -12,12 +16,15 @@ void Solver::setup() {
         if ((startpoint != Coord{-1, -1}) && (endpoint != Coord{-1, -1})) {break;};
     }
 
+    if ((startpoint == Coord{-1, -1}) || (endpoint == Coord{-1, -1})) {return 1;}
+
     // set heuristics
     for (Cell cell : grid.getBoard()) {
         grid.setCellHeuristic(cell.coordinate, (cell.coordinate - endpoint).manhattan());
     }
 
     state = State::INIT;
+    return 0;
 }
 
 void Solver::reset() {

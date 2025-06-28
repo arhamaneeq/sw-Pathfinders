@@ -111,11 +111,17 @@ int main() {
                     else {renderer.appendTooltip("Invalid Algo", "Enter a supported algorithm", {Ansi::Sunny});};
                 }
             } else if (cmd == "RUN") {
-                solver.setup();
-                state = UIState::SOLVING;
-                break;
+                int SetupResult = solver.setup();
+                if (SetupResult == 0) {
+                    state = UIState::SOLVING;
+                    break;
+                } else if (SetupResult == 1) {
+                    renderer.appendTooltip("Key Points Needed", "Start/End point missing.", {Ansi::Red});
+                } else if (SetupResult == 2) {
+                    renderer.appendTooltip("Algo not Set", "Set a valid algorithm to RUN", {Ansi::Red});
+                }
             } else {
-                renderer.appendTooltip("Invalid Command", "Enter a valid command", {Ansi::Red});
+                renderer.appendTooltip("Invalid Command", "Enter a valid command", {Ansi::Sunny});
             }
         }
     

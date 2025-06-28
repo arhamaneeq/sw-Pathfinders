@@ -33,7 +33,7 @@ class Solver {
         Solver(Grid& grid); // TODO:
         ~Solver();
         
-        void setup(); // TODO:
+        int setup(); // TODO:
         void reset();
 
         void step(); // TODO:

@@ -80,7 +80,8 @@ enum class Algorithm {
     Djikstra,
     AStar,
     BFS,
-    DFS
+    DFS,
+    NONE
     // TODO: add support for more algorithms, RRT/RRT*, etc.
 };
 
