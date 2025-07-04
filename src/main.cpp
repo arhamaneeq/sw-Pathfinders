@@ -55,6 +55,10 @@ int main() {
             [&](bool v){renderer.appendText(v ? "True" : "False", {v ? Ansi::Green : Ansi::Red});}(renderer.getAnsiSupport());
         }
 
+        if (frame >= LOADFRAME - 1) {
+            renderer.appendTooltip("Width x Height", std::to_string(grid.getWidth()) + " x " + std::to_string(grid.getHeight()), {Ansi::SkyBlue}, 2);
+        }
+
         renderer.render();
 
         Utils::wait(MSPERFRAME);
