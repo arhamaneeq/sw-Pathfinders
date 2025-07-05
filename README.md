@@ -9,6 +9,9 @@ g++ -std=c++17 -Iinclude src/*.cpp -o game
 ```
 Then run the program from the terminal by running `./game.exe`. Alternatively, execute the program via your GUI file explorer.
 
+> [!TIP]
+> It is recommended to run this program via a dedicated CLI and not an integrated interface, such as that within VS Code or in the browser. 
+
 ### In Program Commands
 The program consists of two modes, 
 (1) SETUP Mode - configure the grid
@@ -32,4 +35,29 @@ The program will check to confirm whether the starting state is valid, and if so
 ├── src/             # Source files
 ├── game.exe         # Compiled executable (after build)
 └── README.md        # This file
+```
+
+The program consists of two main handlers. A `Solver`, and a `Renderer`, are implemented to maintain a seperation of concerns between the core logic of the program and the visualisation of the program. Both act upon or read from a `Grid` which manages the storage of information related to the game state.
+
+```mermaid
+flowchart TD
+    subgraph Application
+        Grid["GRID
+        Holds maze state
+        (start, end, walls, visited)"]
+        Solver["SOLVER
+        Executes algorithm\nbased on Grid state"]
+        Renderer["RENDERER
+        Displays Grid
+        state in terminal"]
+    end
+
+    UserInput --> Grid
+    UserInput --> Solver
+    UserInput --> Renderer
+
+    Solver <-->|Reads & Updates| Grid
+    Grid --> Renderer
+
+    Renderer -->|Prints| Terminal[(Terminal Output)]
 ```
