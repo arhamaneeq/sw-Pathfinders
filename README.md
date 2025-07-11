@@ -10,7 +10,7 @@ g++ -std=c++17 -Iinclude src/*.cpp -o game
 Then run the program from the terminal by running `./game.exe`. Alternatively, execute the program via your GUI file explorer.
 
 > [!TIP]
-> It is recommended to run this program via a dedicated CLI and not an integrated interface, such as that within VS Code or in the browser. 
+> It is recommended to run this program via a dedicated CLI and not an integrated interface, such as that within VS Code or in the browser, since those suffer from performance issues. 
 
 ### In Program Commands
 The program consists of two modes, 
@@ -61,3 +61,7 @@ flowchart TD
 
     Renderer -->|Prints| Terminal[(Terminal Output)]
 ```
+
+## Contribution
+
+Please feel free to Open Issues to inform if you find errors or want to make a feature request!
