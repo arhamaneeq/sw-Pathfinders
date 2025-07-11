@@ -80,29 +80,29 @@ int main() {
             iss >> cmd;
             if (cmd == "PWA") {
                 int x, y;
-                if (!(iss >> x >> y)) {renderer.appendTooltip("ERROR", "Invalid Command", {Ansi::Red});}
+                if (!(iss >> x >> y)) {renderer.appendTooltip("Invalid Parameters", "Expected two Ints: x y", {Ansi::Sunny});}
                     try {grid.config.createWallAt(Coord{x, y});}
                     catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
             } else if (cmd == "END") {
                 return 0; 
             } else if (cmd == "PHL") {
                 int x, y, L;
-                if (!(iss >> x >> y >> L)) {renderer.appendTooltip("ERROR", "Invalid Command", {Ansi::Red});}
+                if (!(iss >> x >> y >> L)) {renderer.appendTooltip("Invalid Parameters", "Expected three Ints: x y L", {Ansi::Sunny});}
                     try {grid.config.createWallHorizontal(Coord{x, y}, L);} 
                     catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
             } else if (cmd == "PVL") {
                 int x, y, L;
-                if (!(iss >> x >> y >> L)) {renderer.appendTooltip("ERROR", "Invalid Command", {Ansi::Red});}
+                if (!(iss >> x >> y >> L)) {renderer.appendTooltip("Invalid Parameters", "Expected three Ints: x y L", {Ansi::Sunny});}
                     try {grid.config.createWallVertical(Coord{x, y}, L);}
                     catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
             } else if (cmd == "PSA") {
                 int x, y;
-                if (!(iss >> x >> y)) {renderer.appendTooltip("ERROR", "Invalid Command", {Ansi::Red});}
+                if (!(iss >> x >> y)) {renderer.appendTooltip("Invalid Parameters", "Expected two Ints: x y", {Ansi::Sunny});}
                     try {grid.config.createTypeAt(Coord{x, y}, cellType::Start);}
                     catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
             } else if (cmd == "PEA") {
                 int x, y;
-                if (!(iss >> x >> y)) {renderer.appendTooltip("ERROR", "Invalid Command", {Ansi::Red});}
+                if (!(iss >> x >> y)) {renderer.appendTooltip("Invalid Parameters", "Expected two Ints: x y", {Ansi::Sunny});}
                     try {grid.config.createTypeAt(Coord{x, y}, cellType::Goal);}
                     catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
             } else if (cmd == "ALGO") {
