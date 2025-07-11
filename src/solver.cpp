@@ -219,6 +219,8 @@ void Solver::stepAStar() {  // FIXME: broken near walls
 
     Coord current = get(frontier).top().second;
     get(frontier).pop();
+
+    if (current != startpoint && grid.getCell(current).type == cellType::Visited) return;
     
     if (current == endpoint) {
         Coord step = endpoint;
@@ -237,7 +239,7 @@ void Solver::stepAStar() {  // FIXME: broken near walls
         grid.setCellType(current, cellType::Visited);
     }
 
-    float currentCost = grid.getCell(current).cost;
+    float currentCost = grid.getCell(current).cost; // g(n)
 
     for (const Coord& neighbour : current.adjacent()) {
         if (grid.getCell(neighbour).type != cellType::Wall && grid.getCell(neighbour).type != cellType::Start) {
@@ -247,7 +249,7 @@ void Solver::stepAStar() {  // FIXME: broken near walls
                 cameFrom[neighbour] = current;
                 grid.setCellCost(neighbour, newCost);
 
-                float priority = newCost + grid.getCell(neighbour).heuristic;
+                float priority = newCost + (1.01)*grid.getCell(neighbour).heuristic; // f(n) = g(n) + h(n)(1 + ε)
                 get(frontier).push({priority, neighbour});
                 if (neighbour != endpoint) {
                     grid.setCellType(neighbour, cellType::Frontier);
