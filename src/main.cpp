@@ -156,8 +156,7 @@ int main() {
 
             if (cmd == "END") {return 0;}
             if (cmd == "RESET") {solver.reset(); state = UIState::SETUP;}  // TODO: define how reset works // FIXME:
-
-            renderer.appendTooltip("Invalid Command", "Valid commands are END or RESET", {Ansi::Terracotta});
+            else {renderer.appendTooltip("Invalid Command", "Valid commands are END or RESET", {Ansi::Terracotta});}
         }
     }
 

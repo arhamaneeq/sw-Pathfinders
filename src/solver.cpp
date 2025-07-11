@@ -28,7 +28,22 @@ int Solver::setup() {
 }
 
 void Solver::reset() {
-    // TODO: how tf should this work
+
+    for (Cell cell : grid.getBoard()) {
+        if (cell.type != cellType::Wall && cell.type != cellType::Start && cell.type != cellType::Goal) {
+            grid.setCellType(cell.coordinate, cellType::Empty);
+        }
+        grid.setCellCost(cell.coordinate, 1.0f);
+        grid.setCellHeuristic(cell.coordinate, 0.0f);
+    }
+    // Reset solver state
+    state = State::NO_INIT;
+    startpoint = Coord{-1, -1};
+    endpoint = Coord{-1, -1};
+    cameFrom.clear();
+    numFrames = 0;
+    frontier = std::queue<Coord>();
+    algo = Algorithm::NONE;
 }
 
 void Solver::setAlgo(Algorithm alg) {
