@@ -5,6 +5,10 @@
 #include "types.hpp"
 #include "utils.hpp"
 
+/**
+ * @class Grid
+ * @brief Represents a 2D game board consisting of cells, providing methods to access and modify cell properties.
+ */
 class Grid {
     private:
         std::vector<Cell> grid;
@@ -28,6 +32,10 @@ class Grid {
         void      setCellCost(const Coord& P, float cost);
         void setCellHeuristic(const Coord& P, float cost);
 
+        /**
+         * @class Configurator
+         * @brief Provides abstractions for manipulating the Grid.
+         */
         class Configurator {
             private:
                 Grid* grid;

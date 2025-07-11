@@ -4,6 +4,14 @@
 #include "types.hpp"
 #include "gameboard.hpp"
 
+/**
+ * @class Renderer
+ * @brief Handles all terminal rendering, including grid display, tooltips, and styled text.
+ *
+ * The Renderer class manages the output buffer and provides methods to render the game grid,
+ * tooltips, progress bars, and styled text to the terminal. It supports ANSI and color output,
+ * and maintains frame state for animations and timed tooltips.
+ */
 class Renderer {
     private:
         using Styles = std::initializer_list<std::string_view>;

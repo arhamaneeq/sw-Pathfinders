@@ -118,6 +118,10 @@ struct Cell {
     Coord coordinate;
 };
 
+/**
+ * @namespace Ansi
+ * @brief Provides ANSI escape codes and utilities for terminal text formatting, colors, and cursor control.
+ */
 namespace Ansi {
     constexpr const char* Reset = "\033[0m";
 
