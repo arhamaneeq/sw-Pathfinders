@@ -81,29 +81,36 @@ int main() {
             if (cmd == "PWA") {
                 int x, y;
                 if (iss >> x >> y) {
-                    grid.config.createWallAt(Coord{x, y});
+                    try {grid.config.createWallAt(Coord{x, y});}
+                    catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
+                } else {
+                    renderer.appendTooltip("ERROR", "Invalid Command", {Ansi::Red});
                 }
             } else if (cmd == "END") {
                 return 0;
             } else if (cmd == "PHL") {
                 int x, y, L;
                 if (iss >> x >> y >> L) {
-                    grid.config.createWallHorizontal(Coord{x, y}, L);
+                    try {grid.config.createWallHorizontal(Coord{x, y}, L);} 
+                    catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
                 }
             } else if (cmd == "PVL") {
                 int x, y, L;
                 if (iss >> x >> y >> L) {
-                    grid.config.createWallVertical(Coord{x, y}, L);
+                    try {grid.config.createWallVertical(Coord{x, y}, L);}
+                    catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
                 }
             } else if (cmd == "PSA") {
                 int x, y;
                 if (iss >> x >> y) {
-                    grid.config.createTypeAt(Coord{x, y}, cellType::Start);
+                    try {grid.config.createTypeAt(Coord{x, y}, cellType::Start);}
+                    catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
                 }
             } else if (cmd == "PEA") {
                 int x, y;
                 if (iss >> x >> y) {
-                    grid.config.createTypeAt(Coord{x, y}, cellType::Goal);
+                    try {grid.config.createTypeAt(Coord{x, y}, cellType::Goal);}
+                    catch (const std::out_of_range& e) {renderer.appendTooltip("ERROR", e.what(), {Ansi::Red});}
                 }
             } else if (cmd == "ALGO") {
                 std::string alg;

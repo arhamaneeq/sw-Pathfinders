@@ -2,18 +2,18 @@
 
 void Errors::outOfBoundingBox(int x, int y, int W, int H, int w, int h) {
     std::ostringstream oss;
-    oss << "Error: out of bounds. (x, y) must satisfy ";
+    oss << "Out of bounds. (x, y) must satisfy ";
     oss << w << " <= " << x << " < " << W;
     oss << " and ";
     oss << h << " <= " << y << " < " << H;
-    oss << ".\n Got (" << x << " ," << y << ") instead.";
+    oss << ". Got (" << x << " ," << y << ") instead.";
 
     throw std::out_of_range(oss.str());
 }
 
 void Errors::outOfBoundingRange(int x, int W) {
     std::ostringstream oss;
-    oss << "Error: out of bounds. x must satisfy\n";
+    oss << "Out of bounds. x must satisfy ";
     oss << "0 <= x < " << W;
     oss << ". Got x = " << x << " instead.";
 
