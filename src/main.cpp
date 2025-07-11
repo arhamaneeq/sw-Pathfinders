@@ -110,7 +110,7 @@ int main() {
                 if (iss >> alg) {
                     if (alg == "BFS") {solver.setAlgo(Algorithm::BFS);}
                     else if (alg == "DFS") {solver.setAlgo(Algorithm::DFS);}
-                    else if (alg == "Djikstra") {solver.setAlgo(Algorithm::Djikstra);}
+                    else if (alg == "Dijkstra") {solver.setAlgo(Algorithm::Dijkstra);}
                     else if (alg == "AStar") {solver.setAlgo(Algorithm::AStar);}
                     else {renderer.appendTooltip("Invalid Algo", "Enter a supported algorithm", {Ansi::Sunny});};
                 }

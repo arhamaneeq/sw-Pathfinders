@@ -77,7 +77,7 @@ namespace std {
 
 
 enum class Algorithm {
-    Djikstra,
+    Dijkstra,
     AStar,
     BFS,
     DFS,

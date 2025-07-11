@@ -26,7 +26,7 @@ During **SETUP**, you initialise the program. You can place starting and ending 
 - `ALGO [algo]`, select algo for solver
 - `RUN`, start solving
 - `END`, exit the program
-The program will check to confirm whether the starting state is valid, and if so, will enter the SOLVER mode. There are four currently supported algorithms, `BFS`, `DFS`, `DJIKTSRA`, and `AStar`. During the **SOLVER** phase the program will use the chosen algorithm to find a path between the starting and end points. Once found you may return to SETUP or End the program.
+The program will check to confirm whether the starting state is valid, and if so, will enter the SOLVER mode. There are four currently supported algorithms, `BFS`, `DFS`, `Dijkstra`, and `AStar`. During the **SOLVER** phase the program will use the chosen algorithm to find a path between the starting and end points. Once found you may return to SETUP or End the program.
 
 ### Project Structure
 ```

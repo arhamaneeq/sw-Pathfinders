@@ -35,7 +35,7 @@ void Solver::setAlgo(Algorithm alg) {
     algo = alg;
     if (alg == Algorithm::BFS) {frontier = std::queue<Coord>();}
     if (alg == Algorithm::DFS) {frontier = std::stack<Coord>();}
-    if (alg == Algorithm::Djikstra || alg == Algorithm::AStar) {frontier = std::priority_queue<std::pair<float, Coord>,std::vector<std::pair<float, Coord>>,std::greater<>>();}
+    if (alg == Algorithm::Dijkstra || alg == Algorithm::AStar) {frontier = std::priority_queue<std::pair<float, Coord>,std::vector<std::pair<float, Coord>>,std::greater<>>();}
 }
 
 void Solver::stepBFS() {                                // FIXME: BFS breaks at bottom boundary
@@ -264,7 +264,7 @@ void Solver::step() {
         case Algorithm::AStar:
         stepAStar();
         break;
-        case Algorithm::Djikstra:
+        case Algorithm::Dijkstra:
         stepDjikstra();
         break;
         case Algorithm::BFS:
