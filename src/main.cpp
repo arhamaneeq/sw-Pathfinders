@@ -142,6 +142,7 @@ int main() {
         }
 
         while (state == UIState::SOLVED) {
+            renderer.appendTooltip("Time Taken", std::to_string(solver.getFrames()) + " frames.", {Ansi::SkyBlue});
             renderer.clear();
             renderer.appendGrid(grid);
             renderer.appendInput(" >>> ", {Ansi::Yellow});

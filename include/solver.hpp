@@ -23,6 +23,7 @@ class Solver {
         
         Algorithm algo;
         State state;
+        int numFrames;
         
         void stepDjikstra(); // TODO:
         void stepAStar();
@@ -42,6 +43,8 @@ class Solver {
         std::vector<Coord> getPath() const;
 
         void setAlgo(Algorithm algo);
+
+        int getFrames() const;
     };
 
 #endif

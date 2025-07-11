@@ -1,6 +1,6 @@
 #include "../include/solver.hpp"
 
-Solver::Solver(Grid& grid) : grid(grid), state(State::NO_INIT), startpoint(Coord{-1, -1}), endpoint(Coord{-1, -1}), algo(Algorithm::NONE) {}
+Solver::Solver(Grid& grid) : grid(grid), state(State::NO_INIT), startpoint(Coord{-1, -1}), endpoint(Coord{-1, -1}), algo(Algorithm::NONE) , numFrames(0) {}
 Solver::~Solver() = default;
 
 int Solver::setup() {
@@ -272,9 +272,14 @@ void Solver::step() {
             stepDFS();
             break;
     }
+
+    numFrames++;
 }
 
 bool Solver::isStopped() const {
     return (state == State::SOLVED);
 }
 
+int Solver::getFrames() const {
+    return numFrames;
+}
