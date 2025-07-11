@@ -8,7 +8,7 @@ Grid::Grid(std::pair<int, int> wd) : width(wd.first), height(wd.second), grid((w
             grid[getIndex(Coord{x, y})].coordinate = Coord{x, y};
             if (
                 x == -1 || y == -1 || 
-                x == width || y == width
+                x == width || y == height
             ) {grid[getIndex(Coord{x, y})].type = cellType::Wall;}
         }
     }
@@ -21,7 +21,7 @@ int Grid::getIndex(const Coord& P) const {
     int y = P.y + 1;
 
     if (x < 0 || y < 0 || x > width + 1 || y > height + 1) {
-        Errors::outOfBoundingBox(x, y, width, height);
+        Errors::outOfBoundingBox(P.x, P.y, width, height);
     }
     return x + y * (width + 2);
 }
